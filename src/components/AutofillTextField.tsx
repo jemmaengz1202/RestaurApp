@@ -17,10 +17,11 @@ const styles = (theme: Theme) => {
   return styles;
 };
 
-interface Props extends WithStyles<typeof styles> {};
+type Props = Omit<TextFieldProps, 'error'> & WithStyles<typeof styles> & {
+  error?: string,
+};
 
-export default withStyles(styles)((props: Props & TextFieldProps) => {
-  const { classes, ...other } = props;
-  console.log(props); 
-  return <TextField inputProps={{ className: classes.input }} {...other} />;
+export default withStyles(styles)((props: Props) => {
+  const { classes, error, variant, ...other } = props;
+  return <TextField inputProps={{ className: classes.input }} error={!!error} helperText={error} variant={variant as any} {...other} />;
 });
