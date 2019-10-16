@@ -4,5 +4,5 @@ export default interface Producto {
   precio: number,
   descripcion: string,
   imagenUrl?: string,
-  categoria: number,
+  categoriaId: number,
 }
