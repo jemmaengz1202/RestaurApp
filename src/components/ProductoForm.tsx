@@ -1,10 +1,10 @@
-import { Button, createStyles, Grid, InputAdornment, MenuItem, Paper, Theme } from '@material-ui/core';
+import { Button, createStyles, Grid, InputAdornment, MenuItem, Paper, Theme, Dialog, DialogTitle, DialogActions, DialogContent, TextField as MTextField } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import { makeStyles } from '@material-ui/styles';
 import useAxios from '@use-hooks/axios';
 import { Field, Form, Formik, FormikActions } from 'formik';
 import { TextField } from 'formik-material-ui';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SyntheticEvent, ChangeEvent } from 'react';
 import { API_URL, axiosInstance } from '../api';
 import { productoSchema } from '../schemas/Producto.schema';
 import Categoria from '../types/categoria';
@@ -45,7 +45,7 @@ export function ProductoForm(props: ProductoFormProps)  {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | ArrayBuffer | null>(producto.imagenUrl ? producto.imagenUrl : null);
   const [imageFormData, setImageFormData] = useState<FormData | null>(null);
 
-  const { response } = useAxios({
+  const { response, reFetch } = useAxios({
     axios: axiosInstance,
     url: '/categorias',
     method: 'GET',
@@ -53,7 +53,35 @@ export function ProductoForm(props: ProductoFormProps)  {
   });
   const listaCategorias: Array<Categoria> = response ? response.data : [];
 
+  console.log(listaCategorias);
+
   const [openSnack, setOpenSnack] = useState(false);
+
+  const [openCategoriaDialog, setOpenCategoriaDialog] = useState(false);
+
+  const [nombreCategoria, setNombreCategoria] = useState('');
+
+  const handleCategoriaDialogClose = () => {
+    setOpenCategoriaDialog(false);
+  };
+
+  const handleNombreCategoriaChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNombreCategoria(e.target.value);
+  };
+
+  const handleAddCategoriaClick = async () => {
+    const res = await axiosInstance({
+      url: '/categorias',
+      method: 'POST',
+      data: {
+        nombre: nombreCategoria,
+      },
+    });
+    if (res) {
+      setOpenCategoriaDialog(false);
+      reFetch();
+    }
+  };
 
   const handleImageChange = async (e: any, formIsValid: boolean) => {
     e.preventDefault();
@@ -177,32 +205,41 @@ export function ProductoForm(props: ProductoFormProps)  {
                 rowsMax="5"
               />
               <br />
-              <Field
-                name="categoriaId"
-                type="text"
-                label="Categoría"
-                margin="normal"
-                fullWidth
-                component={TextField}
-                select
-                InputLabelProps={{
-                  shrink: true
-                }}
-                helperText={!producto.id ? 'Campo requerido' : null}
-              >
-                {listaCategorias.map(categoria => (
-                  <MenuItem key={categoria.id} value={categoria.id}>
-                    {categoria.nombre}
-                  </MenuItem>
-                ))}
-              </Field>
+              <Grid container alignItems="center">
+                <Grid item xs={12} sm={11}>
+                  <Field
+                    name="categoriaId"
+                    type="text"
+                    label="Categoría"
+                    margin="normal"
+                    fullWidth
+                    component={TextField}
+                    select
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    helperText={!producto.id ? 'Campo requerido' : null}
+                  >
+                    {listaCategorias.map(categoria => (
+                      <MenuItem key={categoria.id} value={categoria.id}>
+                        {categoria.nombre}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </Grid>
+                <Grid item xs={12} sm={1}>
+                  <Button variant="contained" color="primary" fullWidth onClick={() => setOpenCategoriaDialog(true)}>
+                    +
+                  </Button>
+                </Grid>
+              </Grid>
               <br />
               <input
                 accept="image/*"
                 style={{ display: 'none' }}
                 id="raised-button-file"
                 type="file"
-                onChange={(e) => handleImageChange(e, values == producto)}
+                onChange={e => handleImageChange(e, values == producto)}
               />
               <label htmlFor="raised-button-file">
                 <Button
@@ -226,9 +263,7 @@ export function ProductoForm(props: ProductoFormProps)  {
                   alt="Imagen del producto"
                 />
               )}
-              {!imagePreviewUrl && (
-                <p>No hay imagen guardada.</p>
-              )}
+              {!imagePreviewUrl && <p>No hay imagen guardada.</p>}
               <br />
               <Button
                 variant="contained"
@@ -245,6 +280,31 @@ export function ProductoForm(props: ProductoFormProps)  {
               message="Operación exitosa."
               handleClose={handleSnackClose}
             />
+            <Dialog
+              open={openCategoriaDialog}
+              onClose={handleCategoriaDialogClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">Añadir categoría</DialogTitle>
+              <DialogContent>
+                <MTextField
+                  autoFocus
+                  margin="dense"
+                  id="nombreCategoria"
+                  label="Nombre de la categoría"
+                  fullWidth
+                  onChange={handleNombreCategoriaChange}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCategoriaDialogClose}>
+                  Cancelar
+                </Button>
+                <Button onClick={handleAddCategoriaClick} color="primary" disabled={!nombreCategoria}>
+                  Añadir
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
         </Grid>
       )}
