@@ -6,4 +6,5 @@ export default interface Orden {
   clienteId: number,
   mesaId: number,
   usuarioId: number,
+  preparada: boolean,
 }
