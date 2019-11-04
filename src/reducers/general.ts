@@ -26,6 +26,11 @@ export const generalReducer = (state: GeneralState, action: any): GeneralState =
         ...state,
         theme,
       }
+    case 'CHANGE_SEARCH':
+      return {
+        ...state,
+        search: action.payload.search,
+      };
   }
   return state;
 };
@@ -57,5 +62,14 @@ export const changeTitleAction = (title: string) => {
 export const changeThemeAction = () => {
   return {
     type: 'CHANGE_THEME',
+  };
+};
+
+export const changeSearchAction = (search: string) => {
+  return {
+    type: 'CHANGE_SEARCH',
+    payload: {
+      search,
+    },
   };
 };

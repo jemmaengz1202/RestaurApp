@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useReducer } from 'react';
 import { GeneralProvider, InitialGeneralState } from '../contexts/GeneralContext';
-import { changeThemeAction, changeTitleAction, generalReducer, signInAction, signOutAction } from '../reducers/general';
+import { changeThemeAction, changeTitleAction, generalReducer, signInAction, signOutAction, changeSearchAction } from '../reducers/general';
 import Usuario from '../types/usuario';
 
 type GeneralContextContainerProps = {
@@ -26,9 +26,13 @@ export const GeneralContextContainer = ({ children }: GeneralContextContainerPro
     dispatch(changeThemeAction());
   }, []);
 
+  const changeSearch = useCallback((search: string) => {
+    dispatch(changeSearchAction(search));
+  }, []);
+
   return (
     <GeneralProvider 
-      value={{ ...state, signIn, signOut, changeTitle, changeTheme }}>
+      value={{ ...state, signIn, signOut, changeTitle, changeTheme, changeSearch }}>
         { children }
     </GeneralProvider>
   );
