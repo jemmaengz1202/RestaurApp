@@ -3,4 +3,5 @@ export default interface Usuario {
   nombre: string,
   username: string,
   password?: string,
+  role?: string,
 }
