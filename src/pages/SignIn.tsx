@@ -10,16 +10,18 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import useFetch from 'use-http';
-import { API_URL } from '../api';
+import React, { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { axiosInstance } from '../api';
+import { GeneralContext } from '../contexts/GeneralContext';
 import Background from '../img/restaurant.jpg';
+import Usuario from '../types/usuario';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://example.com/">
+      <Link color="inherit" href="/">
         Restaurante 
       </Link>{' '}
       {new Date().getFullYear()}
@@ -61,19 +63,46 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function SignIn() {
   const classes = useStyles();
-  const request = useFetch(`${API_URL}/usuarios/login`);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [recordarmeChecked, setRecordarmeChecked] = useState(false);
+  const { changeTitle, openSnackbar, signIn } = useContext(GeneralContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    changeTitle('Acceder');
+  }, []);
+
+  const handleRecordarmeChecked = (e: ChangeEvent<HTMLInputElement>) => {
+    setRecordarmeChecked((v) => !v);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const token = await request.post({
-      username,
-      password
-    });
-    console.log(token);
-    // TODO: Guardar token en local o sessionStorage
-    // TODO: Redireccionar a / al autenticar o mostrar un mensaje de error
+    const data = recordarmeChecked ? {username, password, ttl: 100000000}: {username, password};
+
+    try {
+      const responseLogin = await axiosInstance({
+        url: 'usuarios/login',
+        method: 'POST',
+        data,
+      });
+      if (responseLogin.status === 200) {
+        const responseUsuario = await axiosInstance.request<Usuario>({
+          url: 'usuarios/whoami',
+          method: 'GET',
+        });
+        if (responseUsuario.status === 200) {
+          signIn(responseUsuario.data);
+          openSnackbar('Autenticado correctamente');
+          history.replace('/');
+        }
+      }
+    } catch (err) {
+      if (err.response.status === 401) {
+        openSnackbar('Usuario o contraseña incorrectos', "error");
+      }
+    }
   };
 
   const handleOnUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -121,7 +150,7 @@ export default function SignIn() {
               onChange={handleOnPasswordChange}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox checked={recordarmeChecked} onChange={handleRecordarmeChecked} value="remember" color="primary" />}
               label="Recordarme"
             />
             <Button
@@ -134,18 +163,6 @@ export default function SignIn() {
             >
               Ingresar
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  ¿Olvidaste tu contraseña?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"¿No tienes una cuenta? Crea una."}
-                </Link>
-              </Grid>
-            </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>
