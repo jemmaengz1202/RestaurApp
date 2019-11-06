@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React from 'react';
 import { Snackbar } from '@material-ui/core';
 import CustomizedSBContent from './CustomizedSBContent';
 
