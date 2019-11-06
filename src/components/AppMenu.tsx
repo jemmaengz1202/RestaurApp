@@ -7,6 +7,7 @@ import FastfoodIcon from '@material-ui/icons/Fastfood';
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import ReceiptIcon from '@material-ui/icons/Receipt';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import React, { useContext } from 'react';
 import AppMenuItem from './AppMenuItem';
 import { GeneralContext } from '../contexts/GeneralContext';
@@ -16,6 +17,11 @@ const items = [
     name: 'Inicio',
     link: '/',
     Icon: HomeIcon
+  },
+  {
+    name: 'Acceder',
+    link: '/signin',
+    Icon: LockOpenIcon,
   },
   {
     name: 'Productos',
@@ -34,7 +40,7 @@ const items = [
   },
   {
     name: 'Mesas',
-    link: '/ordenes',
+    link: '/mesas',
     Icon: CheckBoxOutlineBlankIcon,
   },
   {
@@ -57,13 +63,12 @@ const AppMenu: React.FC = () => {
   const role = user ? user.role : 'none';
   const menuEntries = 
     (role === 'mesero') ? ['Inicio', 'Productos', 'Clientes', 'Órdenes', 'Cerrar sesión'] 
-  : (role === 'cocinero') ? ['Inicio', 'Productos', 'Ordenes', 'Cerrar sesión']
-  : !isSignedIn ? ['Inicio', 'Productos']
+  : (role === 'cocinero') ? ['Inicio', 'Productos', 'Órdenes', 'Cerrar sesión']
+  : (role === 'admin') ? ['Inicio', 'Productos', 'Clientes', 'Órdenes', 'Mesas', 'Usuarios', 'Cerrar sesión']
+  : !isSignedIn ? ['Inicio', 'Productos', 'Acceder']
   : [];
 
-  const appMenuItems = 
-    role !== 'admin' ? items.filter(el => menuEntries.includes(el.name))
-    : items;
+  const appMenuItems = items.filter(el => menuEntries.includes(el.name));
 
   return (
     <List component="nav" className={classes.appMenu} disablePadding>
