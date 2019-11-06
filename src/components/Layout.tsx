@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode, useContext, ChangeEvent } from 'react';
 import clsx from 'clsx';
 import {
   makeStyles,
@@ -129,7 +129,7 @@ export default function Layout({ children }: LayoutProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const { title, snackbarOpen, snackbarVariant, snackbarMessage, closeSnackbar } = useContext(GeneralContext);
+  const { title, snackbarOpen, snackbarVariant, snackbarMessage, closeSnackbar, changeSearch } = useContext(GeneralContext);
   const location = useLocation();
   const path = location.pathname;
 
@@ -146,6 +146,10 @@ export default function Layout({ children }: LayoutProps) {
       return;
     }
     closeSnackbar();
+  };
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    changeSearch(e.target.value);
   };
 
   return (
@@ -193,6 +197,7 @@ export default function Layout({ children }: LayoutProps) {
                         input: classes.inputInput
                       }}
                       inputProps={{ 'aria-label': 'search' }}
+                      onChange={handleSearchChange}
                     />
                   </div>
                 )}
