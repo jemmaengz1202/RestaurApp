@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useReducer } from 'react';
-import { GeneralProvider, InitialGeneralState } from '../contexts/GeneralContext';
-import { changeThemeAction, changeTitleAction, generalReducer, signInAction, signOutAction, changeSearchAction } from '../reducers/general';
+import { GeneralProvider, InitialGeneralState, snackbarVariant } from '../contexts/GeneralContext';
+import { changeThemeAction, changeTitleAction, generalReducer, signInAction, signOutAction, changeSearchAction, openSnackbarAction, closeSnackbarAction } from '../reducers/general';
 import Usuario from '../types/usuario';
 
 type GeneralContextContainerProps = {
@@ -30,9 +30,17 @@ export const GeneralContextContainer = ({ children }: GeneralContextContainerPro
     dispatch(changeSearchAction(search));
   }, []);
 
+  const openSnackbar = useCallback((message: string, variant: snackbarVariant = "success") => {
+    dispatch(openSnackbarAction(message, variant));
+  }, []);
+
+  const closeSnackbar = useCallback(() => {
+    dispatch(closeSnackbarAction());
+  }, []);
+
   return (
     <GeneralProvider 
-      value={{ ...state, signIn, signOut, changeTitle, changeTheme, changeSearch }}>
+      value={{ ...state, signIn, signOut, changeTitle, changeTheme, changeSearch, openSnackbar, closeSnackbar }}>
         { children }
     </GeneralProvider>
   );
