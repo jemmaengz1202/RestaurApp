@@ -22,6 +22,7 @@ import { GeneralContext } from '../contexts/GeneralContext';
 import { useLocation } from 'react-router';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase, Grid, Hidden } from '@material-ui/core';
+import CustomizedSnackbar from './CustomizedSnackbar';
 
 const drawerWidth = 240;
 
@@ -128,7 +129,7 @@ export default function Layout({ children }: LayoutProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const { title } = useContext(GeneralContext);
+  const { title, snackbarOpen, snackbarVariant, snackbarMessage, closeSnackbar } = useContext(GeneralContext);
   const location = useLocation();
   const path = location.pathname;
 
@@ -138,6 +139,13 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleSnackClose = (event?: any, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    closeSnackbar();
   };
 
   return (
@@ -173,13 +181,13 @@ export default function Layout({ children }: LayoutProps) {
             </Grid>
             <Hidden smDown>
               <Grid item>
-                {path !== '/' && path !== '/signout' && (
+                {path !== '/' && path !== '/signout' && path !== '/signin' && (
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
                       <SearchIcon />
                     </div>
                     <InputBase
-                      placeholder="Search…"
+                      placeholder="Buscar..."
                       classes={{
                         root: classes.inputRoot,
                         input: classes.inputInput
@@ -222,6 +230,12 @@ export default function Layout({ children }: LayoutProps) {
         <div className={classes.drawerHeader} />
         {children}
       </main>
+      <CustomizedSnackbar
+        open={snackbarOpen ? true : false}
+        message={snackbarMessage ? snackbarMessage : ''}
+        variant={snackbarVariant}
+        handleClose={handleSnackClose}
+      />
     </div>
   );
 }
