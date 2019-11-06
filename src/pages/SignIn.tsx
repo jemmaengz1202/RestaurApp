@@ -71,7 +71,7 @@ export default function SignIn() {
 
   useEffect(() => {
     changeTitle('Acceder');
-  }, []);
+  }, [changeTitle]);
 
   const handleRecordarmeChecked = (e: ChangeEvent<HTMLInputElement>) => {
     setRecordarmeChecked((v) => !v);
