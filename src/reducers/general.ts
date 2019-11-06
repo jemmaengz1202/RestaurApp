@@ -1,4 +1,4 @@
-import { GeneralState } from './../contexts/GeneralContext';
+import { GeneralState, snackbarVariant } from './../contexts/GeneralContext';
 import Usuario from '../types/usuario';
 
 export const generalReducer = (state: GeneralState, action: any): GeneralState => {
@@ -30,6 +30,19 @@ export const generalReducer = (state: GeneralState, action: any): GeneralState =
       return {
         ...state,
         search: action.payload.search,
+      };
+    case 'OPEN_SNACKBAR':
+      return {
+        ...state,
+        snackbarMessage: action.payload.message,
+        snackbarVariant: action.payload.variant,
+        snackbarOpen: true,
+      };
+    case 'CLOSE_SNACKBAR':
+      return {
+        ...state,
+        snackbarMessage: '',
+        snackbarOpen: false,
       };
   }
   return state;
@@ -71,5 +84,21 @@ export const changeSearchAction = (search: string) => {
     payload: {
       search,
     },
+  };
+};
+
+export const openSnackbarAction = (message: string, variant: snackbarVariant = "success") => {
+  return {
+    type: 'OPEN_SNACKBAR',
+    payload: {
+      message,
+      variant,
+    },
+  };
+};
+
+export const closeSnackbarAction = () => {
+  return {
+    type: 'CLOSE_SNACKBAR',
   };
 };
