@@ -192,7 +192,7 @@ export function ProductoForm(props: ProductoFormProps) {
                 </Field>
                 <br />
                 <UploadImageButton
-                  url={imagePreviewUrl}
+                  imagePreviewUrl={imagePreviewUrl}
                   onChange={(url, data) =>
                     handleUploadImageChange(url, data, values === producto)
                   }
