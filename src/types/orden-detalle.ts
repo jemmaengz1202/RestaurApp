@@ -3,4 +3,6 @@ export default interface OrdenDetalle {
   ordenId: number,
   productoId: number,
   anotaciones: string,
-}
+  cantidad: number,
+  precioTotal: number,
+};
