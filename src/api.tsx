@@ -14,3 +14,14 @@ export async function getUser() {
     method: 'GET',
   });
 };
+
+export async function uploadImage(imageFormData: FormData) {
+  const res = await axiosInstance({
+    url: "/attachments/images/upload",
+    method: "POST",
+    data: imageFormData,
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  const imageName = res.data.result.files.file[0].name;
+  return `${API_URL}/attachments/images/download/${imageName}`;
+}
