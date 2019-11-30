@@ -5,6 +5,7 @@ import Background from '../img/wallpaper.jpg';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { GeneralContext } from '../contexts/GeneralContext';
 import { Link } from 'react-router-dom';
+import RestaurantIcon from '@material-ui/icons/Restaurant';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,17 +23,20 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        filter: 'brightness(50%)'
-      }
+        filter: 'brightness(35%)',
+      },
     },
     heroContent: {
       position: 'relative'
     },
     titleText: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
     },
     buttonContainer: {
-      padding: theme.spacing(8),
+      padding: theme.spacing(4),
+    },
+    light: {
+      fontWeight: 600,
     },
   })
 );
@@ -56,12 +60,31 @@ export default function Index() {
       <Grid item className={classes.heroContent}>
         <Grid container direction="column">
           <Grid item>
+            <Typography variant="h1" align="center">
+              <RestaurantIcon
+                fontSize="large"
+                style={{ transform: "scale(2)" }}
+              />
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h5" align="center">
+              <i>Bienvenidos a</i>
+            </Typography>
+          </Grid>
+          <Grid item>
             <Typography variant="h2" align="center">
-              RESTAURAPP
+              <span>RESTAUR</span>
+              <b className={classes.light}>APP</b>
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h4" align="center">
+              🟊🟊🟊🟊🟊
             </Typography>
           </Grid>
           <Grid item className={classes.titleText}>
-            <Typography variant="subtitle1" align="center">
+            <Typography variant="h6" align="center">
               Restaurante de cocina internacional con especialidad en carnes y
               ensaladas
             </Typography>
@@ -74,7 +97,7 @@ export default function Index() {
             >
               <Grid item>
                 <Link to="/productos">
-                  <Button variant="contained" color="secondary">
+                  <Button variant="outlined" color="default">
                     Ver nuestros productos
                   </Button>
                 </Link>
