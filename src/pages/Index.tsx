@@ -1,43 +1,46 @@
-import React, { useEffect, useContext } from 'react';
-import { makeStyles, createStyles } from '@material-ui/styles';
-import { Theme } from '@storybook/theming';
-import Background from '../img/wallpaper.jpg';
-import { Grid, Typography, Button } from '@material-ui/core';
-import { GeneralContext } from '../contexts/GeneralContext';
-import { Link } from 'react-router-dom';
-import RestaurantIcon from '@material-ui/icons/Restaurant';
+import { Button, Grid, Typography } from "@material-ui/core";
+import RestaurantIcon from "@material-ui/icons/Restaurant";
+import { createStyles, makeStyles } from "@material-ui/styles";
+import { Theme } from "@storybook/theming";
+import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { GeneralContext } from "../contexts/GeneralContext";
+import Background from "../img/wallpaper.jpg";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     hero: {
-      position: 'relative',
-      height: '90vh',
-      '&::before': {
+      position: "relative",
+      height: "90vh",
+      [theme.breakpoints.down("sm")]: {
+        height: "93.2vh",
+      },
+      "&::before": {
         content: "''",
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         backgroundImage: `url(${Background}) `,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        filter: 'brightness(35%)',
-      },
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        filter: "brightness(35%)"
+      }
     },
     heroContent: {
-      position: 'relative'
+      position: "relative"
     },
     titleText: {
-      padding: theme.spacing(1),
+      padding: theme.spacing(1)
     },
     buttonContainer: {
-      padding: theme.spacing(4),
+      padding: theme.spacing(4)
     },
     light: {
-      fontWeight: 600,
-    },
+      fontWeight: 600
+    }
   })
 );
 
@@ -46,7 +49,7 @@ export default function Index() {
   const { changeTitle } = useContext(GeneralContext);
 
   useEffect(() => {
-    changeTitle('RestaurApp')
+    changeTitle("RestaurApp");
   }, [changeTitle]);
 
   return (
