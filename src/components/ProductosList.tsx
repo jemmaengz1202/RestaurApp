@@ -13,8 +13,10 @@ export default function ProductosList() {
   const { idcat } = useParams();
   const { search: searchTerm } = useContext(GeneralContext);
   const [page, setPage] = useState(1);
-  const [open, setOpen] = useState(false);
-  const [id, setId] = useState(1);
+  const [productoViewProps, setProductoViewProps] = useState({
+    open: false,
+    id: 0,
+  });
   const search = useDebounce(searchTerm, 500);
 
   useEffect(function changePageTo1() {
@@ -54,13 +56,15 @@ export default function ProductosList() {
       <Grid item xs={12}>
         <Grid container justify="space-between" style={{ padding: 16 }}>
           {productos.map((producto: any) => (
-            <Grid item xs={12} sm={4} key={producto.id}>
-              <ProductoCard 
-              producto={producto}
-              handleClick={(id) => {
-                setId(id);
-                setOpen(true);
-              }} 
+            <Grid item xs={12} sm={6} md={4} key={producto.id}>
+              <ProductoCard
+                producto={producto}
+                handleClick={idp => {
+                  setProductoViewProps({
+                    id: idp,
+                    open: true
+                  });
+                }}
               />
             </Grid>
           ))}
@@ -71,7 +75,9 @@ export default function ProductosList() {
                   limit={9}
                   offset={page === 1 ? 0 : page * 9 - 1}
                   total={metaData.totalItemCount}
-                  onClick={(e, offset) => setPage(offset === 0 ? 1 : offset / 9 + 1)}
+                  onClick={(e, offset) =>
+                    setPage(offset === 0 ? 1 : offset / 9 + 1)
+                  }
                   size="large"
                 />
               </Grid>
@@ -79,11 +85,18 @@ export default function ProductosList() {
           )}
         </Grid>
       </Grid>
-      <ProductoViewDialog 
-        idProducto={id}
-        open={open}
-        handleClose={() => setOpen(false)}
-      />
+      {productoViewProps.id !== 0 && (
+        <ProductoViewDialog
+          idProducto={productoViewProps.id}
+          open={productoViewProps.open}
+          handleClose={() => {
+            setProductoViewProps({
+              open: false,
+              id: 0,
+            });
+          }}
+        />
+      )}
     </Grid>
   );
 }
