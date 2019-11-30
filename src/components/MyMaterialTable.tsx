@@ -35,10 +35,10 @@ export default function MyMaterialTable({ data, columns, tableRef, title, onEdit
       tableRef={tableRef}
       title={title}
       options={{
-        // TODO: Search true on mediaQuery for small devices
         search: false,
         debounceInterval: 2000,
-        pageSizeOptions: []
+        pageSize: 9,
+        pageSizeOptions: [],
       }}
       actions={[
         {
