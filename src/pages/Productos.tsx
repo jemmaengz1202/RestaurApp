@@ -17,7 +17,6 @@ import { EditProductoForm, CreateProductoForm } from "../components/ProductoForm
 import ProductosList from "../components/ProductosList";
 import { GeneralContext } from "../contexts/GeneralContext";
 import useDebounce from "../hooks/useDebounce";
-import missingImage from "../img/missing.jpg";
 import ImageIcon from '@material-ui/icons/Image';
 
 const useStyles = makeStyles((theme: Theme) =>
