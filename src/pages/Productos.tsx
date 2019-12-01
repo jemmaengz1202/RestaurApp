@@ -18,6 +18,7 @@ import ProductosList from "../components/ProductosList";
 import { GeneralContext } from "../contexts/GeneralContext";
 import useDebounce from "../hooks/useDebounce";
 import missingImage from "../img/missing.jpg";
+import ImageIcon from '@material-ui/icons/Image';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -127,11 +128,18 @@ export default function Productos() {
                   title: "Imagen",
                   field: "imagenUrl",
                   render: (rowData: any) => (
-                    <img
-                      style={{ height: 100, width: 100 }}
-                      src={rowData.imagenUrl || missingImage}
-                      alt=""
-                    />
+                    <>
+                      {rowData.imagenUrl ? (
+                        <img
+                          style={{ height: 100, width: 120 }}
+                          src={rowData.imagenUrl}
+                          alt=""
+                        />
+                      ) : 
+                      (
+                        <ImageIcon style={{width: 120, height: 100}} />
+                      )}
+                    </>
                   )
                 },
                 { title: "Identificador", field: "id" },
