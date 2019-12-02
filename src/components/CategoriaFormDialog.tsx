@@ -5,11 +5,13 @@ import { axiosInstance, uploadImage } from '../api';
 import { GeneralContext } from '../contexts/GeneralContext';
 import UploadImageButton from './UploadImageButton';
 import Categoria from '../types/categoria';
+import useAxios from '@use-hooks/axios';
 
 type CategoriaFormDialogProps = {
   open: boolean,
   onClose: () => void,
   categoria: Partial<Categoria>,
+  title: string,
 };
 
 export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
@@ -37,15 +39,16 @@ export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
       imagenUrl = await uploadImage(imagenFormData);
     }
     const res = await axiosInstance({
-      url: "/categorias",
-      method: "POST",
+      url: props.categoria.id ? `/categorias/${props.categoria.id}` : "/categorias",
+      method: props.categoria.id ? "PATCH" : "POST",
       data: {
         nombre,
         imagenUrl,
       }
     });
     if (res) {
-      openSnackbar('Categoría añadida correctamente', 'success');
+      console.log(res);
+      openSnackbar('Categoría guardada correctamente', 'success');
       props.onClose();
     }
   };
@@ -56,7 +59,7 @@ export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
       onClose={props.onClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle>Añadir categoría</DialogTitle>
+      <DialogTitle>{props.title ? props.title : 'Añadir categoría'}</DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -65,6 +68,7 @@ export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
           label="Nombre de la categoría"
           fullWidth
           onChange={handleNombreChange}
+          value={nombre}
         />
         <br />
         <UploadImageButton
@@ -80,7 +84,7 @@ export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
           color="primary"
           disabled={!nombre}
         >
-          Añadir
+          Guardar
         </Button>
       </DialogActions>
     </Dialog>
@@ -90,3 +94,35 @@ export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
 CategoriaFormDialog.defaultProps = {
   categoria: {},
 } as Partial<CategoriaFormDialogProps>;
+
+type EditCategoriaFormDialogProps = {
+  id: number,
+  open: boolean,
+  onClose: () => void,
+};
+
+export function EditCategoriaFormDialog({
+  id,
+  open,
+  onClose
+}: EditCategoriaFormDialogProps) {
+  const { response, loading } = useAxios({
+    axios: axiosInstance,
+    url: `/categorias/${id}`,
+    method: "GET",
+    trigger: []
+  });
+
+  const categoria = response ? response.data : null;
+
+  if (loading || categoria == null) return null;
+
+  return (
+    <CategoriaFormDialog
+      categoria={categoria}
+      title="Editar usuario"
+      open={open}
+      onClose={onClose}
+    />
+  );
+}
