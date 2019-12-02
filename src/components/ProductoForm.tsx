@@ -12,7 +12,7 @@ import { Field, Form, Formik, FormikActions } from "formik";
 import { TextField } from "formik-material-ui";
 import React, { useState, useContext } from "react";
 import { API_URL, axiosInstance } from "../api";
-import { productoSchema } from "../schemas/Producto.schema";
+import { productoSchema, editProductoSchema } from "../schemas/Producto.schema";
 import Categoria from "../types/categoria";
 import Producto from "../types/producto";
 import { GeneralContext } from "../contexts/GeneralContext";
@@ -103,7 +103,7 @@ export function ProductoForm(props: ProductoFormProps) {
     <>
       <Formik
         initialValues={producto}
-        validationSchema={productoSchema}
+        validationSchema={!props.producto.id ? productoSchema : editProductoSchema}
         onSubmit={onSubmit}
         render={({ submitForm, isSubmitting, isValid, values }) => (
           <Dialog
