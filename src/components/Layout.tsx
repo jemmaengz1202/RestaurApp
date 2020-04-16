@@ -1,38 +1,38 @@
-import React, { ReactNode, useContext, ChangeEvent } from 'react';
-import clsx from 'clsx';
+import React, { ReactNode, useContext, ChangeEvent } from "react";
+import clsx from "clsx";
 import {
   makeStyles,
   useTheme,
   Theme,
   createStyles,
   fade
-} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import AppMenu from './AppMenu';
-import { GeneralContext } from '../contexts/GeneralContext';
-import { useLocation } from 'react-router';
-import SearchIcon from '@material-ui/icons/Search';
-import { InputBase, Grid, Hidden } from '@material-ui/core';
-import CustomizedSnackbar from './CustomizedSnackbar';
+} from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import AppMenu from "./AppMenu";
+import { GeneralContext } from "../contexts/GeneralContext";
+import { useLocation } from "react-router";
+import SearchIcon from "@material-ui/icons/Search";
+import { InputBase, Grid, Hidden } from "@material-ui/core";
+import CustomizedSnackbar from "./CustomizedSnackbar";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex'
+      display: "flex"
     },
     appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
+      transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       })
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
     appBarShift: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
+      transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen
       })
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2)
     },
     hide: {
-      display: 'none'
+      display: "none"
     },
     drawer: {
       width: drawerWidth,
@@ -59,77 +59,89 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth
     },
     drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
-      justifyContent: 'flex-end'
+      justifyContent: "flex-end"
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
+      padding: 0,
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       }),
       marginLeft: -drawerWidth
     },
     contentShift: {
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen
       }),
       marginLeft: 0
     },
     search: {
-      position: 'relative',
+      position: "relative",
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
+      "&:hover": {
         backgroundColor: fade(theme.palette.common.white, 0.25)
       },
       marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
-        width: 'auto',
+        width: "auto"
       }
     },
     searchIcon: {
       width: theme.spacing(7),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
+      height: "100%",
+      position: "absolute",
+      pointerEvents: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     },
     inputRoot: {
-      color: 'inherit'
+      color: "inherit"
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
         width: 120,
-        '&:focus': {
+        "&:focus": {
           width: 200
         }
       }
+    },
+    appbarTransparent: {
+      backgroundColor: "transparent",
+      border: "none",
+      boxShadow: "none"
     }
   })
 );
 
 type LayoutProps = {
-  children: ReactNode,
+  children: ReactNode;
 };
 
 export default function Layout({ children }: LayoutProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const { title, snackbarOpen, snackbarVariant, snackbarMessage, closeSnackbar, changeSearch } = useContext(GeneralContext);
+  const {
+    title,
+    snackbarOpen,
+    snackbarVariant,
+    snackbarMessage,
+    closeSnackbar,
+    changeSearch
+  } = useContext(GeneralContext);
   const location = useLocation();
   const path = location.pathname;
 
@@ -142,7 +154,7 @@ export default function Layout({ children }: LayoutProps) {
   };
 
   const handleSnackClose = (event?: any, reason?: string) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     closeSnackbar();
@@ -158,14 +170,15 @@ export default function Layout({ children }: LayoutProps) {
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: open,
+          [classes.appbarTransparent]: path === "/"
         })}
       >
         <Toolbar>
           <Grid container alignItems="center">
             <Grid item xs>
-              <Grid container alignItems="center">
-                <Grid item>
+              <Grid container alignItems="center" justify="space-between">
+                <Grid item xs={1}>
                   <IconButton
                     color="inherit"
                     aria-label="open drawer"
@@ -176,33 +189,40 @@ export default function Layout({ children }: LayoutProps) {
                     <MenuIcon />
                   </IconButton>
                 </Grid>
-                <Grid item>
-                  <Typography variant="h6" noWrap>
-                    {title}
-                  </Typography>
-                </Grid>
+                <Hidden smDown={path !== "/"}>
+                  <Grid item md={7}>
+                    <Grid container justify="flex-start">
+                      <Typography variant="h6" noWrap>
+                        {title}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Hidden>
+                <Hidden xlUp>
+                  <Grid item md={4}>
+                    {path !== "/" &&
+                      path !== "/signout" &&
+                      path !== "/signin" &&
+                      path !== "/reportes" && (
+                        <div className={classes.search}>
+                          <div className={classes.searchIcon}>
+                            <SearchIcon />
+                          </div>
+                          <InputBase
+                            placeholder="Buscar..."
+                            classes={{
+                              root: classes.inputRoot,
+                              input: classes.inputInput
+                            }}
+                            inputProps={{ "aria-label": "search" }}
+                            onChange={handleSearchChange}
+                          />
+                        </div>
+                      )}
+                  </Grid>
+                </Hidden>
               </Grid>
             </Grid>
-            <Hidden smDown>
-              <Grid item>
-                {path !== '/' && path !== '/signout' && path !== '/signin' && (
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <SearchIcon />
-                    </div>
-                    <InputBase
-                      placeholder="Buscar..."
-                      classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput
-                      }}
-                      inputProps={{ 'aria-label': 'search' }}
-                      onChange={handleSearchChange}
-                    />
-                  </div>
-                )}
-              </Grid>
-            </Hidden>
           </Grid>
         </Toolbar>
       </AppBar>
@@ -217,7 +237,7 @@ export default function Layout({ children }: LayoutProps) {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
+            {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
@@ -237,7 +257,7 @@ export default function Layout({ children }: LayoutProps) {
       </main>
       <CustomizedSnackbar
         open={snackbarOpen ? true : false}
-        message={snackbarMessage ? snackbarMessage : ''}
+        message={snackbarMessage ? snackbarMessage : ""}
         variant={snackbarVariant}
         handleClose={handleSnackClose}
       />
