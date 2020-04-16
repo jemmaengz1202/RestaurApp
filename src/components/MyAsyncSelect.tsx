@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      minWidth: 290,
+      minWidth: 170,
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2)
     },
