@@ -18,53 +18,53 @@ const items = [
   {
     name: "Inicio",
     link: "/",
-    Icon: HomeIcon
+    Icon: HomeIcon,
   },
   {
     name: "Acceder",
     link: "/signin",
-    Icon: LockOpenIcon
+    Icon: LockOpenIcon,
   },
   {
     name: "Productos",
     link: "/productos",
-    Icon: FastfoodIcon
+    Icon: FastfoodIcon,
   },
   {
     name: "Categorías",
     link: "/categorias",
-    Icon: CategoryIcon
+    Icon: CategoryIcon,
   },
   {
     name: "Clientes",
     link: "/clientes",
-    Icon: PeopleIcon
+    Icon: PeopleIcon,
   },
   {
     name: "Órdenes",
     link: "/ordenes",
-    Icon: ReceiptIcon
+    Icon: ReceiptIcon,
   },
   {
     name: "Mesas",
     link: "/mesas",
-    Icon: CheckBoxOutlineBlankIcon
+    Icon: CheckBoxOutlineBlankIcon,
   },
   {
     name: "Reporte",
     link: "/reporte",
-    Icon: AssignmentIcon
+    Icon: AssignmentIcon,
   },
   {
     name: "Usuarios",
     link: "/usuarios",
-    Icon: AccountBoxIcon
+    Icon: AccountBoxIcon,
   },
   {
     name: "Cerrar sesión",
     link: "/signout",
-    Icon: ExitToAppIcon
-  }
+    Icon: ExitToAppIcon,
+  },
 ];
 
 const AppMenu: React.FC = () => {
@@ -87,13 +87,13 @@ const AppMenu: React.FC = () => {
           "Mesas",
           "Reporte",
           "Usuarios",
-          "Cerrar sesión"
+          "Cerrar sesión",
         ]
       : !isSignedIn
       ? ["Inicio", "Productos", "Acceder"]
       : [];
 
-  const appMenuItems = items.filter(el => menuEntries.includes(el.name));
+  const appMenuItems = items.filter((el) => menuEntries.includes(el.name));
 
   return (
     <List component="nav" className={classes.appMenu} disablePadding>
@@ -110,17 +110,17 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appMenu: {
-      width: "100%"
+      width: "100%",
     },
     navList: {
-      width: drawerWidth
+      width: drawerWidth,
     },
     menuItem: {
-      width: drawerWidth
+      width: drawerWidth,
     },
     menuItemIcon: {
-      color: theme.palette.primary.main
-    }
+      color: theme.palette.primary.main,
+    },
   })
 );
 

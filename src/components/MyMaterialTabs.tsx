@@ -34,7 +34,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: any) {
   return {
     id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
     width: "100%",
     margin: 0,
-    padding: 0
-  }
+    padding: 0,
+  },
 }));
 
 type MyMaterialTabsProps = {
@@ -54,7 +54,7 @@ type MyMaterialTabsProps = {
 
 export default function MyMaterialTabs({
   children,
-  titles
+  titles,
 }: MyMaterialTabsProps) {
   const classes = useStyles();
   const theme = useTheme();

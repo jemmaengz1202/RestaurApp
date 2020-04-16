@@ -1,10 +1,10 @@
-import React, { useState, ChangeEvent, useContext, useEffect } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button
+  Button,
 } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
 import { axiosInstance } from "../api";
@@ -41,10 +41,6 @@ export default function OrdenDetalleFormDialog(
     ordenDetalle.cantidad ? ordenDetalle.cantidad : 1
   );
 
-  const [productoId, setProductoId] = useState(
-    ordenDetalle.productoId ? ordenDetalle.productoId : 0
-  );
-
   const [productoIdValue, setClienteIdValue] = useState<
     ValueType<OptionType>
   >();
@@ -54,15 +50,15 @@ export default function OrdenDetalleFormDialog(
       if (ordenDetalle.productoId) {
         axiosInstance({
           url: `/productos/${ordenDetalle.productoId}`,
-          method: "GET"
+          method: "GET",
         })
-          .then(responseProducto => {
+          .then((responseProducto) => {
             setClienteIdValue({
               label: responseProducto.data.nombre,
-              value: responseProducto.data.id
+              value: responseProducto.data.id,
             } as any);
           })
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       }
     },
     [ordenDetalle.productoId]
@@ -72,7 +68,7 @@ export default function OrdenDetalleFormDialog(
     const pIdValue = productoIdValue as any;
     const response = await axiosInstance({
       url: `/productos/${pIdValue.value}`,
-      method: 'GET'
+      method: "GET",
     });
     const producto = response.data;
     const subtotal = producto.precio * cantidad;
@@ -82,7 +78,7 @@ export default function OrdenDetalleFormDialog(
       cantidad,
       productoId: pIdValue.value,
       subtotal,
-      producto
+      producto,
     };
     props.onClose();
     props.onSubmit(ordenDetalleCreada);
@@ -108,7 +104,7 @@ export default function OrdenDetalleFormDialog(
           label="Cantidad"
           fullWidth
           type="number"
-          onChange={val => setCantidad(Number(val.target.value))}
+          onChange={(val) => setCantidad(Number(val.target.value))}
           value={cantidad}
           onFocus={handleCantidadFocus}
         />
@@ -116,20 +112,20 @@ export default function OrdenDetalleFormDialog(
         <MyAsyncSelect
           value={productoIdValue}
           label="Producto"
-          onChange={v => {
+          onChange={(v) => {
             setClienteIdValue(v as any);
           }}
-          loadOptions={async inputValue => {
+          loadOptions={async (inputValue) => {
             const responseProducto = await axiosInstance({
               url: `/productos?page=1&filter[where][q]=${
                 inputValue ? inputValue : ""
               }`,
-              method: "GET"
+              method: "GET",
             });
             if (responseProducto) {
               return responseProducto.data.data.map((v: any) => ({
                 label: v.nombre,
-                value: v.id
+                value: v.id,
               }));
             }
             return [];
@@ -163,7 +159,7 @@ export default function OrdenDetalleFormDialog(
 }
 
 OrdenDetalleFormDialog.defaultProps = {
-  ordenDetalle: {}
+  ordenDetalle: {},
 } as Partial<OrdenDetalleFormDialogProps>;
 
 type EditOrdenDetalleFormDialogProps = {
@@ -180,14 +176,14 @@ export function EditOrdenDetalleFormDialog({
   open,
   onClose,
   onSubmit,
-  ordenDetalleAEditar
+  ordenDetalleAEditar,
 }: EditOrdenDetalleFormDialogProps) {
   let idD = id ? id : 1;
   const { response, loading } = useAxios({
     axios: axiosInstance,
     url: `/ordenes_detalles/${idD}`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const ordenDetalle = response ? response.data : null;

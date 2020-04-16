@@ -26,21 +26,21 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        filter: "brightness(35%)"
-      }
+        filter: "brightness(35%)",
+      },
     },
     heroContent: {
-      position: "relative"
+      position: "relative",
     },
     titleText: {
-      padding: theme.spacing(1)
+      padding: theme.spacing(1),
     },
     buttonContainer: {
-      padding: theme.spacing(4)
+      padding: theme.spacing(4),
     },
     light: {
-      fontWeight: 600
-    }
+      fontWeight: 600,
+    },
   })
 );
 

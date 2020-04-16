@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   Switch,
-  FormControlLabel
+  FormControlLabel,
 } from "@material-ui/core";
 import useAxios from "@use-hooks/axios";
 import { Field, Form, Formik, FormikActions } from "formik";
@@ -26,9 +26,7 @@ type MesaFormDialogProps = {
 export function MesaFormDialog(props: MesaFormDialogProps) {
   const { openSnackbar } = useContext(GeneralContext);
 
-  const [mesa] = useState<Partial<Mesa>>(
-    props.mesa ? props.mesa : {}
-  );
+  const [mesa] = useState<Partial<Mesa>>(props.mesa ? props.mesa : {});
 
   const [disponible, setDisponible] = useState(!!props.mesa.disponible);
 
@@ -42,7 +40,7 @@ export function MesaFormDialog(props: MesaFormDialogProps) {
     const res = await axiosInstance({
       url: mesa.id ? `/mesas/${mesa.id}` : "/mesas",
       method: mesa.id ? "PATCH" : "POST",
-      data: mesaBody
+      data: mesaBody,
     });
 
     setSubmitting(false);
@@ -99,7 +97,7 @@ export function MesaFormDialog(props: MesaFormDialogProps) {
                       label={disponible ? "Disponible" : "No disponible"}
                       component={Switch}
                       onChange={(e: any) => {
-                        setDisponible(val => !val);
+                        setDisponible((val) => !val);
                         setCambio(true);
                       }}
                       checked={disponible}
@@ -129,7 +127,7 @@ export function MesaFormDialog(props: MesaFormDialogProps) {
 
 MesaFormDialog.defaultProps = {
   mesa: {},
-  title: "Añadir mesa"
+  title: "Añadir mesa",
 } as Partial<MesaFormDialogProps>;
 
 type EditMesaFormDialogProps = {
@@ -141,13 +139,13 @@ type EditMesaFormDialogProps = {
 export function EditMesaFormDialog({
   id,
   open,
-  onClose
+  onClose,
 }: EditMesaFormDialogProps) {
   const { response, loading } = useAxios({
     axios: axiosInstance,
     url: `/mesas/${id}`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const mesa = response ? response.data : null;

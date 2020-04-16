@@ -19,10 +19,12 @@ export default function ProductosList() {
   });
   const search = useDebounce(searchTerm, 500);
 
-  useEffect(function changePageTo1() {
-    setPage(1);
-  }, [search, setPage]);
-
+  useEffect(
+    function changePageTo1() {
+      setPage(1);
+    },
+    [search, setPage]
+  );
 
   const url = idcat
     ? `/categorias/${idcat}/productos?filter[include][categoria]&filter[where][q]=${
@@ -36,7 +38,7 @@ export default function ProductosList() {
     axios: axiosInstance,
     url,
     method: "GET",
-    trigger: [search, page]
+    trigger: [search, page],
   });
 
   let productos;
@@ -59,10 +61,10 @@ export default function ProductosList() {
             <Grid item xs={12} sm={6} md={4} key={producto.id}>
               <ProductoCard
                 producto={producto}
-                handleClick={idp => {
+                handleClick={(idp) => {
                   setProductoViewProps({
                     id: idp,
-                    open: true
+                    open: true,
                   });
                 }}
               />

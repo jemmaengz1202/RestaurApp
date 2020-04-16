@@ -17,14 +17,14 @@ const useStyles = makeStyles({
     marginBottom: 20,
     marginLeft: "auto",
     marginRight: "auto",
-    height: 320
+    height: 320,
   },
   media: {
-    height: 140
+    height: 140,
   },
   content: {
-    height: 320 - 186
-  }
+    height: 320 - 186,
+  },
 });
 
 type ProductoCardProps = {
@@ -36,7 +36,7 @@ const DESCRIPCION_MAX_LENGTH = 137;
 
 export default function ProductoCard({
   producto,
-  handleClick
+  handleClick,
 }: ProductoCardProps) {
   const classes = useStyles();
   const history = useHistory();
@@ -67,7 +67,10 @@ export default function ProductoCard({
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {producto.descripcion.length > DESCRIPCION_MAX_LENGTH ? (
-              <>{`${producto.descripcion.substring(0, DESCRIPCION_MAX_LENGTH)}...`}</>
+              <>{`${producto.descripcion.substring(
+                0,
+                DESCRIPCION_MAX_LENGTH
+              )}...`}</>
             ) : (
               <>{producto.descripcion}</>
             )}
@@ -76,24 +79,24 @@ export default function ProductoCard({
       </CardActionArea>
       <CardActions>
         <Grid container justify="space-between">
-        <Button
-          size="small"
-          color="default"
-          onClick={handleProductoClick}
-          variant="outlined"
-        >
-          Ver detalles
-        </Button>
-        {producto.categoria && (
           <Button
             size="small"
             color="default"
-            onClick={handleCategoriaClick}
+            onClick={handleProductoClick}
             variant="outlined"
           >
-            más {producto.categoria.nombre}
+            Ver detalles
           </Button>
-        )}
+          {producto.categoria && (
+            <Button
+              size="small"
+              color="default"
+              onClick={handleCategoriaClick}
+              variant="outlined"
+            >
+              más {producto.categoria.nombre}
+            </Button>
+          )}
         </Grid>
       </CardActions>
     </Card>

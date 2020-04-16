@@ -1,39 +1,41 @@
-import React, { useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import { GeneralContext } from './contexts/GeneralContext';
-import { getUser } from './api';
-import SignIn from './pages/SignIn';
-import SignOut from './pages/SignOut';
-import Productos from './pages/Productos';
-import Index from './pages/Index';
-import ProductosList from './components/ProductosList';
-import Producto from './pages/Producto';
-import Usuarios from './pages/Usuarios';
-import Categorias from './pages/Categorias';
-import Clientes from './pages/Clientes';
-import Mesas from './pages/Mesas';
-import Ordenes from './pages/Ordenes';
-import Reporte from './pages/Reporte';
+import React, { useContext, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import { GeneralContext } from "./contexts/GeneralContext";
+import { getUser } from "./api";
+import SignIn from "./pages/SignIn";
+import SignOut from "./pages/SignOut";
+import Productos from "./pages/Productos";
+import Index from "./pages/Index";
+import ProductosList from "./components/ProductosList";
+import Producto from "./pages/Producto";
+import Usuarios from "./pages/Usuarios";
+import Categorias from "./pages/Categorias";
+import Clientes from "./pages/Clientes";
+import Mesas from "./pages/Mesas";
+import Ordenes from "./pages/Ordenes";
+import Reporte from "./pages/Reporte";
 
 export const AppRouter = () => {
   const { signIn } = useContext(GeneralContext);
 
-  useEffect(function checkLoginStatus() {
-    const asyncFunction = async () => {
-      try {
-        const res = await getUser();
+  useEffect(
+    function checkLoginStatus() {
+      const asyncFunction = async () => {
+        try {
+          const res = await getUser();
 
-        if (res.status === 200) {
-          signIn(res.data);
+          if (res.status === 200) {
+            signIn(res.data);
+          }
+        } catch (err) {
+          console.log("No está autenticado");
         }
-      } catch (err) {
-        console.log('No está autenticado');
-      }
-      
-    };
-    asyncFunction();
-  }, [signIn]);
+      };
+      asyncFunction();
+    },
+    [signIn]
+  );
 
   return (
     <Router>

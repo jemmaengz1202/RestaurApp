@@ -5,7 +5,7 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
-  DialogContent
+  DialogContent,
 } from "@material-ui/core";
 import useAxios from "@use-hooks/axios";
 import { Field, Form, Formik, FormikActions } from "formik";
@@ -20,12 +20,12 @@ import CategoriaFormDialog from "./CategoriaFormDialog";
 import UploadImageButton from "./UploadImageButton";
 
 type ProductoFormProps = {
-  producto: Partial<Producto>,
-  open: boolean,
-  onClose: () => void,
-  setOpen: () => void,
-  title: string,
-  categorias: Categoria[],
+  producto: Partial<Producto>;
+  open: boolean;
+  onClose: () => void;
+  setOpen: () => void;
+  title: string;
+  categorias: Categoria[];
 };
 
 export function ProductoForm(props: ProductoFormProps) {
@@ -37,8 +37,9 @@ export function ProductoForm(props: ProductoFormProps) {
 
   const [isValidImageEdit, setIsValidImageEdit] = useState(false);
 
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<
-    string>(producto.imagenUrl ? producto.imagenUrl : '');
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string>(
+    producto.imagenUrl ? producto.imagenUrl : ""
+  );
   const [imageFormData, setImageFormData] = useState<FormData | null>(null);
 
   const [openCategoriaDialog, setOpenCategoriaDialog] = useState(false);
@@ -48,7 +49,11 @@ export function ProductoForm(props: ProductoFormProps) {
     setOpenCategoriaDialog(false);
   };
 
-  const handleUploadImageChange = (url: string, data: FormData, formIsValid: boolean) => {
+  const handleUploadImageChange = (
+    url: string,
+    data: FormData,
+    formIsValid: boolean
+  ) => {
     setImageFormData(data);
     setImagePreviewUrl(url);
     if (formIsValid) {
@@ -71,7 +76,7 @@ export function ProductoForm(props: ProductoFormProps) {
           url: "/attachments/images/upload",
           method: "POST",
           data: imageFormData,
-          headers: { "Content-Type": "multipart/form-data" }
+          headers: { "Content-Type": "multipart/form-data" },
         });
         const imageName = res.data.result.files.file[0].name;
         imagenUrl = `${API_URL}/attachments/images/download/${imageName}`;
@@ -83,13 +88,13 @@ export function ProductoForm(props: ProductoFormProps) {
     const res = await axiosInstance({
       url: producto.id ? `/productos/${producto.id}` : "/productos",
       method: producto.id ? "PATCH" : "POST",
-      data: productoBody
+      data: productoBody,
     });
     setSubmitting(false);
     if (res) {
       console.log("Todo OK: ", res);
       openSnackbar("Operación exitosa", "success");
-      setImagePreviewUrl('');
+      setImagePreviewUrl("");
     }
     if (producto.imagenUrl) {
       setImagePreviewUrl(producto.imagenUrl);
@@ -103,7 +108,9 @@ export function ProductoForm(props: ProductoFormProps) {
     <>
       <Formik
         initialValues={producto}
-        validationSchema={!props.producto.id ? productoSchema : editProductoSchema}
+        validationSchema={
+          !props.producto.id ? productoSchema : editProductoSchema
+        }
         onSubmit={onSubmit}
         render={({ submitForm, isSubmitting, isValid, values }) => (
           <Dialog
@@ -139,7 +146,7 @@ export function ProductoForm(props: ProductoFormProps) {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">$</InputAdornment>
-                    )
+                    ),
                   }}
                 />
                 <br />
@@ -164,7 +171,7 @@ export function ProductoForm(props: ProductoFormProps) {
                   component={TextField}
                   select
                   InputLabelProps={{
-                    shrink: true
+                    shrink: true,
                   }}
                   helperText={!producto.id ? "Campo requerido" : null}
                   variant="outlined"
@@ -181,10 +188,10 @@ export function ProductoForm(props: ProductoFormProps) {
                       >
                         +
                       </Button>
-                    )
+                    ),
                   }}
                 >
-                  {listaCategorias.map(categoria => (
+                  {listaCategorias.map((categoria) => (
                     <MenuItem key={categoria.id} value={categoria.id}>
                       {categoria.nombre}
                     </MenuItem>
@@ -234,11 +241,11 @@ ProductoForm.defaultProps = {
 } as Partial<ProductoFormProps>;
 
 type CreateProductoFormProps = {
-  open: boolean,
-  onClose: () => void,
-  setOpen: () => void,
-  producto?: Producto,
-  title?: string,
+  open: boolean;
+  onClose: () => void;
+  setOpen: () => void;
+  producto?: Producto;
+  title?: string;
 };
 
 export function CreateProductoForm(props: CreateProductoFormProps) {
@@ -248,14 +255,14 @@ export function CreateProductoForm(props: CreateProductoFormProps) {
     axios: axiosInstance,
     url: "/categorias",
     method: "GET",
-    trigger: []
+    trigger: [],
   });
   const listaCategorias: Array<Categoria> = response ? response.data : [];
 
   if (loading || listaCategorias === []) return null;
 
   return (
-    <ProductoForm 
+    <ProductoForm
       categorias={listaCategorias}
       open={props.open}
       onClose={props.onClose}
@@ -266,21 +273,24 @@ export function CreateProductoForm(props: CreateProductoFormProps) {
   );
 }
 
-
 type EditProductoFormProps = {
-  id: number,
-  open: boolean,
-  onClose: () => void,
-  setOpen: () => void,
+  id: number;
+  open: boolean;
+  onClose: () => void;
+  setOpen: () => void;
 };
 
-
-export function EditProductoForm({ id, open, onClose, setOpen }: EditProductoFormProps) {
+export function EditProductoForm({
+  id,
+  open,
+  onClose,
+  setOpen,
+}: EditProductoFormProps) {
   const { response, loading } = useAxios({
     axios: axiosInstance,
     url: `/productos/${id}`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const producto = response ? response.data : null;

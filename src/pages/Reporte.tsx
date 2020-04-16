@@ -9,7 +9,7 @@ import {
   TableCell,
   Grid,
   Typography,
-  Button
+  Button,
 } from "@material-ui/core";
 import useAxios from "@use-hooks/axios";
 import { axiosInstance } from "../api";
@@ -20,7 +20,7 @@ export function ReporteAImprimir() {
     axios: axiosInstance,
     url: `/ordenes/reporte`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const rows = response ? response.data : null;
@@ -46,7 +46,7 @@ export function ReporteAImprimir() {
                 <TableCell>
                   {row.fecha
                     ? format(new Date(row.fecha), "dd 'de' MMMM 'del' yyyy", {
-                        locale: es
+                        locale: es,
                       })
                     : "No agrupada"}
                 </TableCell>
@@ -61,7 +61,6 @@ export function ReporteAImprimir() {
 }
 
 export default function Reporte() {
-
   const { changeTitle } = useContext(GeneralContext);
 
   useEffect(() => {
@@ -69,7 +68,7 @@ export default function Reporte() {
   }, [changeTitle]);
 
   return (
-    <Grid container style={{padding: 20}}>
+    <Grid container style={{ padding: 20 }}>
       <Grid item>
         <Button
           color="secondary"

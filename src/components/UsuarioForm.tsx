@@ -4,7 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  MenuItem
+  MenuItem,
 } from "@material-ui/core";
 import useAxios from "@use-hooks/axios";
 import { Field, Form, Formik, FormikActions } from "formik";
@@ -35,7 +35,7 @@ export function UsuarioForm(props: UsuarioFormProps) {
         }
       : {
           password: "",
-          rolId: 2
+          rolId: 2,
         }
   );
 
@@ -74,7 +74,7 @@ export function UsuarioForm(props: UsuarioFormProps) {
           url: "/attachments/images/upload",
           method: "POST",
           data: imageFormData,
-          headers: { "Content-Type": "multipart/form-data" }
+          headers: { "Content-Type": "multipart/form-data" },
         });
         const imageName = res.data.result.files.file[0].name;
         imagenUrl = `${API_URL}/attachments/images/download/${imageName}`;
@@ -86,7 +86,7 @@ export function UsuarioForm(props: UsuarioFormProps) {
     const res = await axiosInstance({
       url: usuario.id ? `/usuarios/${usuario.id}` : "/usuarios",
       method: usuario.id ? "PATCH" : "POST",
-      data: usuarioBody
+      data: usuarioBody,
     });
     principalId = res.data.id;
     if (usuario.rolId !== roleId) {
@@ -96,8 +96,8 @@ export function UsuarioForm(props: UsuarioFormProps) {
         data: {
           principalId,
           roleId,
-          principalType: "USER"
-        }
+          principalType: "USER",
+        },
       });
     }
 
@@ -171,7 +171,7 @@ export function UsuarioForm(props: UsuarioFormProps) {
                   component={TextField}
                   select
                   InputLabelProps={{
-                    shrink: true
+                    shrink: true,
                   }}
                   helperText={!usuario.id ? "Campo requerido" : null}
                   variant="outlined"
@@ -217,7 +217,7 @@ UsuarioForm.defaultProps = {
     categoriaId: 1,
     password: "",
   },
-  title: "Añadir usuario"
+  title: "Añadir usuario",
 } as Partial<UsuarioFormProps>;
 
 type EditProductoFormProps = {
@@ -231,13 +231,13 @@ export function EditUsuarioForm({
   id,
   open,
   onClose,
-  setOpen
+  setOpen,
 }: EditProductoFormProps) {
   const { response, loading } = useAxios({
     axios: axiosInstance,
     url: `/usuarios/${id}?filter[include][roles]`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const usuario = response ? response.data : null;

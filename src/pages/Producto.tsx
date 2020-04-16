@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import ProductoViewDialog from '../components/ProductoViewDialog';
-import { useParams, useHistory } from 'react-router';
+import React, { useState } from "react";
+import ProductoViewDialog from "../components/ProductoViewDialog";
+import { useParams, useHistory } from "react-router";
 
 export default function Producto() {
   const [open, setOpen] = useState(true);
@@ -8,13 +8,13 @@ export default function Producto() {
   const { idprod } = useParams();
 
   return (
-    <ProductoViewDialog 
+    <ProductoViewDialog
       handleClose={() => {
         setOpen(false);
-        history.replace('/productos');
+        history.replace("/productos");
       }}
       idProducto={Number(idprod)}
       open={open}
     />
-  )
+  );
 }

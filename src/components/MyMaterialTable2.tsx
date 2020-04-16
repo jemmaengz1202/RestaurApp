@@ -34,7 +34,7 @@ export default function MyMaterialTable2({
   title,
   onPreparadoClick,
   onVerClick,
-  actionTitle
+  actionTitle,
 }: MyMaterialTable2Props) {
   return (
     <MaterialTable
@@ -46,19 +46,19 @@ export default function MyMaterialTable2({
         search: false,
         debounceInterval: 2000,
         pageSize: 9,
-        pageSizeOptions: []
+        pageSizeOptions: [],
       }}
       actions={[
         {
           icon: "done_all",
           tooltip: actionTitle,
-          onClick: (_event, rowData) => onPreparadoClick(rowData)
+          onClick: (_event, rowData) => onPreparadoClick(rowData),
         },
         {
           icon: "remove_red_eye",
           tooltip: "Ver",
-          onClick: (_event, rowData) => onVerClick(rowData)
-        }
+          onClick: (_event, rowData) => onVerClick(rowData),
+        },
       ]}
       localization={{
         pagination: {
@@ -70,22 +70,22 @@ export default function MyMaterialTable2({
           previousAriaLabel: "Página anterior",
           previousTooltip: "Página anterior",
           nextAriaLabel: "Página siguiente",
-          nextTooltip: "Página siguiente"
+          nextTooltip: "Página siguiente",
         },
         toolbar: {
           nRowsSelected: "{0} filas(s) seleccionadas",
           searchTooltip: "Búsqueda",
-          searchPlaceholder: "Búsqueda"
+          searchPlaceholder: "Búsqueda",
         },
         header: {
-          actions: "Acciones"
+          actions: "Acciones",
         },
         body: {
           emptyDataSourceMessage: "No hay elementos para mostrar",
           filterRow: {
-            filterTooltip: "Filtro"
-          }
-        }
+            filterTooltip: "Filtro",
+          },
+        },
       }}
       icons={{
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -120,7 +120,7 @@ export default function MyMaterialTable2({
         )),
         ViewColumn: forwardRef((props, ref) => (
           <ViewColumn {...props} ref={ref} />
-        ))
+        )),
       }}
     />
   );

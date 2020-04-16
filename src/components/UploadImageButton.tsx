@@ -1,27 +1,31 @@
-import React from 'react';
-import { Button, makeStyles, Theme, createStyles } from '@material-ui/core';
+import React from "react";
+import { Button, makeStyles, Theme, createStyles } from "@material-ui/core";
 import ImageIcon from "@material-ui/icons/Image";
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonUpload: {
       marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     image: {
       maxWidth: "100%",
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
   })
 );
 
 type UploadImageButtonProps = {
-  imagePreviewUrl: string,
-  onChange: (url: string, data: FormData) => void,
-  buttonText: string,
+  imagePreviewUrl: string;
+  onChange: (url: string, data: FormData) => void;
+  buttonText: string;
 };
 
-export default function UploadImageButton({ imagePreviewUrl, onChange, buttonText }: UploadImageButtonProps) {
+export default function UploadImageButton({
+  imagePreviewUrl,
+  onChange,
+  buttonText,
+}: UploadImageButtonProps) {
   const classes = useStyles();
 
   const handleImageChange = async (e: any) => {
@@ -59,7 +63,7 @@ export default function UploadImageButton({ imagePreviewUrl, onChange, buttonTex
           component="span"
           className={classes.buttonUpload}
         >
-          { buttonText }
+          {buttonText}
         </Button>
       </label>
       <br />

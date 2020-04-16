@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Button
+  Button,
 } from "@material-ui/core";
 
 export interface ConfirmationOptions {
@@ -27,7 +27,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   variant,
   description,
   onSubmit,
-  onClose
+  onClose,
 }) => {
   return (
     <Dialog open={open}>

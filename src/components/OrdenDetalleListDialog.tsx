@@ -19,12 +19,12 @@ import { useHistory } from "react-router";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      position: "relative"
+      position: "relative",
     },
     title: {
       marginLeft: theme.spacing(2),
-      flex: 1
-    }
+      flex: 1,
+    },
   })
 );
 
@@ -43,7 +43,7 @@ export function OrdenDetallesList({ ordenId }: OrdenDetallesListProps) {
     axios: axiosInstance,
     url: `/ordenes_detalles?filter={"where":{"ordenId":${ordenId}},"include":"producto"}`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const history = useHistory();
@@ -78,7 +78,7 @@ type OrdenDetalleListDialogProps = {
 export default function OrdenDetalleListDialog({
   ordenId,
   open,
-  onClose
+  onClose,
 }: OrdenDetalleListDialogProps) {
   const classes = useStyles();
 

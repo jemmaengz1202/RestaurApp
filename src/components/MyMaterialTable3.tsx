@@ -34,7 +34,7 @@ export default function MyMaterialTable3({
   title,
   onEditClick,
   onDeleteClick,
-  onCerrarClick
+  onCerrarClick,
 }: MyMaterialTable3Props) {
   return (
     <MaterialTable
@@ -46,24 +46,24 @@ export default function MyMaterialTable3({
         search: false,
         debounceInterval: 2000,
         pageSize: 9,
-        pageSizeOptions: []
+        pageSizeOptions: [],
       }}
       actions={[
         {
           icon: "done_all",
           tooltip: "Cerrar orden",
-          onClick: (_event, rowData) => onCerrarClick(rowData)
+          onClick: (_event, rowData) => onCerrarClick(rowData),
         },
         {
           icon: "edit",
           tooltip: "Editar elemento",
-          onClick: (_event, rowData) => onEditClick(rowData)
+          onClick: (_event, rowData) => onEditClick(rowData),
         },
         {
           icon: "delete",
           tooltip: "Eliminar elemento",
-          onClick: (_event, rowData) => onDeleteClick(rowData)
-        }
+          onClick: (_event, rowData) => onDeleteClick(rowData),
+        },
       ]}
       localization={{
         pagination: {
@@ -75,22 +75,22 @@ export default function MyMaterialTable3({
           previousAriaLabel: "Página anterior",
           previousTooltip: "Página anterior",
           nextAriaLabel: "Página siguiente",
-          nextTooltip: "Página siguiente"
+          nextTooltip: "Página siguiente",
         },
         toolbar: {
           nRowsSelected: "{0} filas(s) seleccionadas",
           searchTooltip: "Búsqueda",
-          searchPlaceholder: "Búsqueda"
+          searchPlaceholder: "Búsqueda",
         },
         header: {
-          actions: "Acciones"
+          actions: "Acciones",
         },
         body: {
           emptyDataSourceMessage: "No hay elementos para mostrar",
           filterRow: {
-            filterTooltip: "Filtro"
-          }
-        }
+            filterTooltip: "Filtro",
+          },
+        },
       }}
       icons={{
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -125,7 +125,7 @@ export default function MyMaterialTable3({
         )),
         ViewColumn: forwardRef((props, ref) => (
           <ViewColumn {...props} ref={ref} />
-        ))
+        )),
       }}
     />
   );

@@ -1,22 +1,30 @@
-import React, { useState, ChangeEvent, useContext } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
-import { TextField } from '@material-ui/core';
-import { axiosInstance, uploadImage } from '../api';
-import { GeneralContext } from '../contexts/GeneralContext';
-import UploadImageButton from './UploadImageButton';
-import Categoria from '../types/categoria';
-import useAxios from '@use-hooks/axios';
+import React, { useState, ChangeEvent, useContext } from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { axiosInstance, uploadImage } from "../api";
+import { GeneralContext } from "../contexts/GeneralContext";
+import UploadImageButton from "./UploadImageButton";
+import Categoria from "../types/categoria";
+import useAxios from "@use-hooks/axios";
 
 type CategoriaFormDialogProps = {
-  open: boolean,
-  onClose: () => void,
-  categoria: Partial<Categoria>,
-  title: string,
+  open: boolean;
+  onClose: () => void;
+  categoria: Partial<Categoria>;
+  title: string;
 };
 
 export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
   const categoria = props.categoria;
-  const [nombre, setNombre] = useState(categoria.nombre ? categoria.nombre : '');
+  const [nombre, setNombre] = useState(
+    categoria.nombre ? categoria.nombre : ""
+  );
   const [imagenPreviewUrl, setImagenPreviewUrl] = useState(
     categoria.imagenUrl ? categoria.imagenUrl : ""
   );
@@ -34,21 +42,23 @@ export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
   };
 
   const handleAddCategoriaClick = async () => {
-    let imagenUrl = '';
+    let imagenUrl = "";
     if (imagenFormData) {
       imagenUrl = await uploadImage(imagenFormData);
     }
     const res = await axiosInstance({
-      url: props.categoria.id ? `/categorias/${props.categoria.id}` : "/categorias",
+      url: props.categoria.id
+        ? `/categorias/${props.categoria.id}`
+        : "/categorias",
       method: props.categoria.id ? "PATCH" : "POST",
       data: {
         nombre,
         imagenUrl,
-      }
+      },
     });
     if (res) {
       console.log(res);
-      openSnackbar('Categoría guardada correctamente', 'success');
+      openSnackbar("Categoría guardada correctamente", "success");
       props.onClose();
     }
   };
@@ -59,7 +69,9 @@ export default function CategoriaFormDialog(props: CategoriaFormDialogProps) {
       onClose={props.onClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle>{props.title ? props.title : 'Añadir categoría'}</DialogTitle>
+      <DialogTitle>
+        {props.title ? props.title : "Añadir categoría"}
+      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -96,21 +108,21 @@ CategoriaFormDialog.defaultProps = {
 } as Partial<CategoriaFormDialogProps>;
 
 type EditCategoriaFormDialogProps = {
-  id: number,
-  open: boolean,
-  onClose: () => void,
+  id: number;
+  open: boolean;
+  onClose: () => void;
 };
 
 export function EditCategoriaFormDialog({
   id,
   open,
-  onClose
+  onClose,
 }: EditCategoriaFormDialogProps) {
   const { response, loading } = useAxios({
     axios: axiosInstance,
     url: `/categorias/${id}`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const categoria = response ? response.data : null;

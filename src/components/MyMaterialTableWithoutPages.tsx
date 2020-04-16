@@ -32,7 +32,7 @@ export default function MyMaterialTableWithoutPages({
   tableRef,
   title,
   onEditClick,
-  onDeleteClick
+  onDeleteClick,
 }: MyMaterialTableWithoutPagesProps) {
   return (
     <MaterialTable
@@ -43,19 +43,19 @@ export default function MyMaterialTableWithoutPages({
       options={{
         search: false,
         pageSizeOptions: [],
-        paging: false
+        paging: false,
       }}
       actions={[
         {
           icon: "edit",
           tooltip: "Editar elemento",
-          onClick: (_event, rowData) => onEditClick(rowData)
+          onClick: (_event, rowData) => onEditClick(rowData),
         },
         {
           icon: "delete",
           tooltip: "Eliminar elemento",
-          onClick: (_event, rowData) => onDeleteClick(rowData)
-        }
+          onClick: (_event, rowData) => onDeleteClick(rowData),
+        },
       ]}
       localization={{
         pagination: {
@@ -67,22 +67,22 @@ export default function MyMaterialTableWithoutPages({
           previousAriaLabel: "Página anterior",
           previousTooltip: "Página anterior",
           nextAriaLabel: "Página siguiente",
-          nextTooltip: "Página siguiente"
+          nextTooltip: "Página siguiente",
         },
         toolbar: {
           nRowsSelected: "{0} filas(s) seleccionadas",
           searchTooltip: "Búsqueda",
-          searchPlaceholder: "Búsqueda"
+          searchPlaceholder: "Búsqueda",
         },
         header: {
-          actions: "Acciones"
+          actions: "Acciones",
         },
         body: {
           emptyDataSourceMessage: "No hay elementos para mostrar",
           filterRow: {
-            filterTooltip: "Filtro"
-          }
-        }
+            filterTooltip: "Filtro",
+          },
+        },
       }}
       icons={{
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -117,7 +117,7 @@ export default function MyMaterialTableWithoutPages({
         )),
         ViewColumn: forwardRef((props, ref) => (
           <ViewColumn {...props} ref={ref} />
-        ))
+        )),
       }}
     />
   );

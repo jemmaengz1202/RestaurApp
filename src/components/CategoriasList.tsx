@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover, &$focusVisible": {
         zIndex: 1,
         "& $imageBackdrop": {
-          opacity: 0.15
+          opacity: 0.15,
         },
         "& $imageMarked": {
-          opacity: 0
-        }
-      }
+          opacity: 0,
+        },
+      },
     },
     imageButton: {
       position: "absolute",
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: theme.palette.common.white
+      color: theme.palette.common.white,
     },
     imageSrc: {
       position: "absolute",
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 0,
       bottom: 0,
       backgroundSize: "cover",
-      backgroundPosition: "center 40%"
+      backgroundPosition: "center 40%",
     },
     imageBackdrop: {
       position: "absolute",
@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 0,
       backgroundColor: theme.palette.common.black,
       opacity: 0.4,
-      transition: theme.transitions.create("opacity")
-    }
+      transition: theme.transitions.create("opacity"),
+    },
   })
 );
 
@@ -66,14 +66,14 @@ export default function ButtonBases() {
       search ? search : ""
     )}`,
     method: "GET",
-    trigger: [search]
+    trigger: [search],
   });
 
   const images = response
     ? response.data.map((el: any) => ({
         id: el.id,
         url: el.imagenUrl,
-        title: el.nombre
+        title: el.nombre,
       }))
     : [];
 
@@ -89,12 +89,12 @@ export default function ButtonBases() {
             focusRipple
             className={classes.image}
             style={{ width: "100%" }}
-            onClick={_ => handleCategoriaClick(image.id)}
+            onClick={(_) => handleCategoriaClick(image.id)}
           >
             <span
               className={classes.imageSrc}
               style={{
-                backgroundImage: `url(${image.url})`
+                backgroundImage: `url(${image.url})`,
               }}
             ></span>
             <span className={classes.imageBackdrop} />

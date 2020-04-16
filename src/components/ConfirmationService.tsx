@@ -9,13 +9,15 @@ export const useConfirmation = () =>
   React.useContext(ConfirmationServiceContext);
 
 type ConfirmationServiceProviderProps = {
-  children: ReactNode,
-}
+  children: ReactNode;
+};
 
-export const ConfirmationServiceProvider = ({ children }: ConfirmationServiceProviderProps) => {
+export const ConfirmationServiceProvider = ({
+  children,
+}: ConfirmationServiceProviderProps) => {
   const [
     confirmationState,
-    setConfirmationState
+    setConfirmationState,
   ] = React.useState<ConfirmationOptions | null>(null);
 
   const awaitingPromiseRef = React.useRef<{
@@ -31,7 +33,11 @@ export const ConfirmationServiceProvider = ({ children }: ConfirmationServicePro
   };
 
   const handleClose = () => {
-    if (confirmationState !== null && confirmationState.catchOnCancel && awaitingPromiseRef.current) {
+    if (
+      confirmationState !== null &&
+      confirmationState.catchOnCancel &&
+      awaitingPromiseRef.current
+    ) {
       awaitingPromiseRef.current.reject();
     }
 
@@ -57,9 +63,9 @@ export const ConfirmationServiceProvider = ({ children }: ConfirmationServicePro
         open={Boolean(confirmationState)}
         onSubmit={handleSubmit}
         onClose={handleClose}
-        variant={confirmationState ? confirmationState.variant : 'info'}
-        title={confirmationState ? confirmationState.title : ''}
-        description={confirmationState ? confirmationState.description : ''}
+        variant={confirmationState ? confirmationState.variant : "info"}
+        title={confirmationState ? confirmationState.title : ""}
+        description={confirmationState ? confirmationState.description : ""}
       />
     </>
   );

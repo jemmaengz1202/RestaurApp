@@ -1,13 +1,28 @@
-import React, { ReactNode, useCallback, useReducer } from 'react';
-import { GeneralProvider, InitialGeneralState, snackbarVariant } from '../contexts/GeneralContext';
-import { changeThemeAction, changeTitleAction, generalReducer, signInAction, signOutAction, changeSearchAction, openSnackbarAction, closeSnackbarAction } from '../reducers/general';
-import Usuario from '../types/usuario';
+import React, { ReactNode, useCallback, useReducer } from "react";
+import {
+  GeneralProvider,
+  InitialGeneralState,
+  snackbarVariant,
+} from "../contexts/GeneralContext";
+import {
+  changeThemeAction,
+  changeTitleAction,
+  generalReducer,
+  signInAction,
+  signOutAction,
+  changeSearchAction,
+  openSnackbarAction,
+  closeSnackbarAction,
+} from "../reducers/general";
+import Usuario from "../types/usuario";
 
 type GeneralContextContainerProps = {
-  children: ReactNode,
+  children: ReactNode;
 };
 
-export const GeneralContextContainer = ({ children }: GeneralContextContainerProps) => {
+export const GeneralContextContainer = ({
+  children,
+}: GeneralContextContainerProps) => {
   const [state, dispatch] = useReducer(generalReducer, InitialGeneralState);
 
   const signIn = useCallback((user: Usuario) => {
@@ -30,18 +45,31 @@ export const GeneralContextContainer = ({ children }: GeneralContextContainerPro
     dispatch(changeSearchAction(search));
   }, []);
 
-  const openSnackbar = useCallback((message: string, variant: snackbarVariant = "success") => {
-    dispatch(openSnackbarAction(message, variant));
-  }, []);
+  const openSnackbar = useCallback(
+    (message: string, variant: snackbarVariant = "success") => {
+      dispatch(openSnackbarAction(message, variant));
+    },
+    []
+  );
 
   const closeSnackbar = useCallback(() => {
     dispatch(closeSnackbarAction());
   }, []);
 
   return (
-    <GeneralProvider 
-      value={{ ...state, signIn, signOut, changeTitle, changeTheme, changeSearch, openSnackbar, closeSnackbar }}>
-        { children }
+    <GeneralProvider
+      value={{
+        ...state,
+        signIn,
+        signOut,
+        changeTitle,
+        changeTheme,
+        changeSearch,
+        openSnackbar,
+        closeSnackbar,
+      }}
+    >
+      {children}
     </GeneralProvider>
   );
 };

@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import { NavLink, NavLinkProps } from 'react-router-dom';
+import React, { forwardRef } from "react";
+import ListItem from "@material-ui/core/ListItem";
+import { NavLink, NavLinkProps } from "react-router-dom";
 
 export interface AppMenuItemComponentProps {
   className?: string;
@@ -8,11 +8,11 @@ export interface AppMenuItemComponentProps {
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const AppMenuItemComponent: React.FC<AppMenuItemComponentProps> = props => {
+const AppMenuItemComponent: React.FC<AppMenuItemComponentProps> = (props) => {
   const { className, onClick, link, children } = props;
 
   // If link is not set return the orinary ListItem
-  if (!link || typeof link !== 'string') {
+  if (!link || typeof link !== "string") {
     return (
       <ListItem
         button

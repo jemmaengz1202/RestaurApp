@@ -6,7 +6,7 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { axiosInstance } from "../api";
 import { useConfirmation } from "../components/ConfirmationService";
@@ -28,13 +28,13 @@ const useStyles = makeStyles((theme: Theme) =>
     fab: {
       position: "fixed",
       bottom: theme.spacing(10),
-      right: theme.spacing(6)
+      right: theme.spacing(6),
     },
     table: {
       maxWidth: "100vw",
       margin: "auto",
-      overflow: "hidden"
-    }
+      overflow: "hidden",
+    },
   })
 );
 
@@ -54,20 +54,20 @@ export default function Ordenes() {
 
   const [editFormProps, setEditFormProps] = useState({
     id: 0,
-    open: false
+    open: false,
   });
 
   const [newFormOpen, setNewFormOpen] = useState(false);
 
   const [cerrarOrdenProps, setCerrarOrdenProps] = useState({
     id: 0,
-    open: false
+    open: false,
   });
 
   const [ordenDetalleProps, setOrdenDetalleProps] = useState({
     id: 0,
-    open: false
-  })
+    open: false,
+  });
 
   useEffect(() => {
     changeTitle("Órdenes");
@@ -96,7 +96,7 @@ export default function Ordenes() {
   const editElement = (orden: any) => {
     setEditFormProps({
       id: orden.id,
-      open: true
+      open: true,
     });
   };
 
@@ -105,12 +105,12 @@ export default function Ordenes() {
       variant: "danger",
       title: "Preparar orden",
       description: `¿Está lista la orden "${orden.id}"?`,
-      catchOnCancel: true
+      catchOnCancel: true,
     })
       .then(async () => {
         const response = await axiosInstance({
           url: `ordenes/${orden.id}/set-preparada`,
-          method: "POST"
+          method: "POST",
         });
 
         if (response.status === 200) {
@@ -125,7 +125,7 @@ export default function Ordenes() {
   const cerrarOrden = (orden: any) => {
     setCerrarOrdenProps({
       id: orden.id,
-      open: true
+      open: true,
     });
   };
 
@@ -133,7 +133,7 @@ export default function Ordenes() {
     updateTable();
     setCerrarOrdenProps({
       id: 0,
-      open: false
+      open: false,
     });
   };
 
@@ -141,7 +141,7 @@ export default function Ordenes() {
     updateTable();
     setEditFormProps({
       id: 0,
-      open: false
+      open: false,
     });
   };
 
@@ -154,28 +154,28 @@ export default function Ordenes() {
     updateTable();
     setOrdenDetalleProps({
       id: 0,
-      open: false
-    })
+      open: false,
+    });
   };
 
   const verDetallesOrden = (orden: any) => {
     setOrdenDetalleProps({
       id: orden.id,
-      open: true
-    })
-  }
+      open: true,
+    });
+  };
 
   const deleteElement = (orden: any) => {
     confirm({
       variant: "danger",
       title: "Confirmar eliminación de la orden",
       description: `¿Estás seguro de eliminar la orden "${orden.id}"?`,
-      catchOnCancel: true
+      catchOnCancel: true,
     })
       .then(async () => {
         const response = await axiosInstance({
           url: `ordenes/${orden.id}`,
-          method: "DELETE"
+          method: "DELETE",
         });
 
         if (response.status === 200) {
@@ -209,11 +209,11 @@ export default function Ordenes() {
                       new Date(rowData.inicio),
                       "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                       {
-                        locale: es
+                        locale: es,
                       }
                     )}
                   </>
-                )
+                ),
               },
               {
                 title: "Cierre",
@@ -225,18 +225,18 @@ export default function Ordenes() {
                         new Date(rowData.cierre),
                         "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                         {
-                          locale: es
+                          locale: es,
                         }
                       )}
                     </>
                   ) : (
                     <></>
-                  )
+                  ),
               },
               {
                 title: "Importe",
                 field: "importe",
-                render: (rowData: any) => <>${rowData.importe}</>
+                render: (rowData: any) => <>${rowData.importe}</>,
               },
               { title: "Cliente", field: "cliente.nombre" },
               { title: "Mesa", field: "mesa.nombre" },
@@ -244,21 +244,22 @@ export default function Ordenes() {
               {
                 title: "Preparada",
                 field: "preparada",
-                render: (rowData: any) => <>{rowData.preparada ? "✓" : "✗"}</>
-              }
+                render: (rowData: any) => <>{rowData.preparada ? "✓" : "✗"}</>,
+              },
             ]}
-            data={async query => {
+            data={async (query) => {
               const response = await axiosInstance.request({
-                url: `/ordenes?page=${query.page +
-                  1}&filter={"where":{"q":"${encodeURIComponent(
+                url: `/ordenes?page=${
+                  query.page + 1
+                }&filter={"where":{"q":"${encodeURIComponent(
                   query.search ? query.search : ""
                 )}","preparada":false},"include":["cliente","usuario","mesa"]}`,
-                method: "GET"
+                method: "GET",
               });
               return {
                 data: response.data.data,
                 page: response.data.meta.currentPage - 1,
-                totalCount: response.data.meta.totalItemCount
+                totalCount: response.data.meta.totalItemCount,
               };
             }}
             onPreparadoClick={setPreparado}
@@ -281,16 +282,16 @@ export default function Ordenes() {
                         new Date(rowData.inicio),
                         "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                         {
-                          locale: es
+                          locale: es,
                         }
                       )}
                     </>
-                  )
+                  ),
                 },
                 {
                   title: "Importe",
                   field: "importe",
-                  render: (rowData: any) => <>${rowData.importe}</>
+                  render: (rowData: any) => <>${rowData.importe}</>,
                 },
                 { title: "Cliente", field: "cliente.nombre" },
                 { title: "Mesa", field: "mesa.nombre" },
@@ -298,23 +299,26 @@ export default function Ordenes() {
                 {
                   title: "Preparada",
                   field: "preparada",
-                  render: (rowData: any) => <>{rowData.preparada ? "✓" : "✗"}</>
-                }
+                  render: (rowData: any) => (
+                    <>{rowData.preparada ? "✓" : "✗"}</>
+                  ),
+                },
               ]}
-              data={async query => {
+              data={async (query) => {
                 const response = await axiosInstance.request({
-                  url: `/ordenes?page=${query.page +
-                    1}&filter={"where":{"q":"${encodeURIComponent(
+                  url: `/ordenes?page=${
+                    query.page + 1
+                  }&filter={"where":{"q":"${encodeURIComponent(
                     query.search ? query.search : ""
                   )}","usuarioId":${
                     user ? user.id : 1
                   },"cierre":null},"include":["cliente","usuario","mesa"]}`,
-                  method: "GET"
+                  method: "GET",
                 });
                 return {
                   data: response.data.data,
                   page: response.data.meta.currentPage - 1,
-                  totalCount: response.data.meta.totalItemCount
+                  totalCount: response.data.meta.totalItemCount,
                 };
               }}
               onEditClick={editElement}
@@ -333,11 +337,11 @@ export default function Ordenes() {
                         new Date(rowData.inicio),
                         "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                         {
-                          locale: es
+                          locale: es,
                         }
                       )}
                     </>
-                  )
+                  ),
                 },
                 {
                   title: "Cierre",
@@ -349,18 +353,18 @@ export default function Ordenes() {
                           new Date(rowData.cierre),
                           "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                           {
-                            locale: es
+                            locale: es,
                           }
                         )}
                       </>
                     ) : (
                       <></>
-                    )
+                    ),
                 },
                 {
                   title: "Importe",
                   field: "importe",
-                  render: (rowData: any) => <>${rowData.importe}</>
+                  render: (rowData: any) => <>${rowData.importe}</>,
                 },
                 { title: "Cliente", field: "cliente.nombre" },
                 { title: "Mesa", field: "mesa.nombre" },
@@ -368,23 +372,26 @@ export default function Ordenes() {
                 {
                   title: "Preparada",
                   field: "preparada",
-                  render: (rowData: any) => <>{rowData.preparada ? "✓" : "✗"}</>
-                }
+                  render: (rowData: any) => (
+                    <>{rowData.preparada ? "✓" : "✗"}</>
+                  ),
+                },
               ]}
-              data={async query => {
+              data={async (query) => {
                 const response = await axiosInstance.request({
-                  url: `/ordenes?page=${query.page +
-                    1}&filter={"where":{"q":"${encodeURIComponent(
+                  url: `/ordenes?page=${
+                    query.page + 1
+                  }&filter={"where":{"q":"${encodeURIComponent(
                     query.search ? query.search : ""
                   )}","usuarioId":${
                     user ? user.id : 1
                   },"preparada":true,"cierre":null},"include":["cliente","usuario","mesa"]}`,
-                  method: "GET"
+                  method: "GET",
                 });
                 return {
                   data: response.data.data,
                   page: response.data.meta.currentPage - 1,
-                  totalCount: response.data.meta.totalItemCount
+                  totalCount: response.data.meta.totalItemCount,
                 };
               }}
               onEditClick={editElement}
@@ -404,11 +411,11 @@ export default function Ordenes() {
                         new Date(rowData.inicio),
                         "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                         {
-                          locale: es
+                          locale: es,
                         }
                       )}
                     </>
-                  )
+                  ),
                 },
                 {
                   title: "Cierre",
@@ -420,18 +427,18 @@ export default function Ordenes() {
                           new Date(rowData.cierre),
                           "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                           {
-                            locale: es
+                            locale: es,
                           }
                         )}
                       </>
                     ) : (
                       <></>
-                    )
+                    ),
                 },
                 {
                   title: "Importe",
                   field: "importe",
-                  render: (rowData: any) => <>${rowData.importe}</>
+                  render: (rowData: any) => <>${rowData.importe}</>,
                 },
                 { title: "Cliente", field: "cliente.nombre" },
                 { title: "Mesa", field: "mesa.nombre" },
@@ -439,23 +446,26 @@ export default function Ordenes() {
                 {
                   title: "Preparada",
                   field: "preparada",
-                  render: (rowData: any) => <>{rowData.preparada ? "✓" : "✗"}</>
-                }
+                  render: (rowData: any) => (
+                    <>{rowData.preparada ? "✓" : "✗"}</>
+                  ),
+                },
               ]}
-              data={async query => {
+              data={async (query) => {
                 const response = await axiosInstance.request({
-                  url: `/ordenes?page=${query.page +
-                    1}&filter={"where":{"q":"${encodeURIComponent(
+                  url: `/ordenes?page=${
+                    query.page + 1
+                  }&filter={"where":{"q":"${encodeURIComponent(
                     query.search ? query.search : ""
                   )}","usuarioId":${
                     user ? user.id : 1
                   },"preparada":false,"cierre":null},"include":["cliente","usuario","mesa"]}`,
-                  method: "GET"
+                  method: "GET",
                 });
                 return {
                   data: response.data.data,
                   page: response.data.meta.currentPage - 1,
-                  totalCount: response.data.meta.totalItemCount
+                  totalCount: response.data.meta.totalItemCount,
                 };
               }}
               onEditClick={editElement}
@@ -477,11 +487,11 @@ export default function Ordenes() {
                       new Date(rowData.inicio),
                       "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                       {
-                        locale: es
+                        locale: es,
                       }
                     )}
                   </>
-                )
+                ),
               },
               {
                 title: "Cierre",
@@ -493,18 +503,18 @@ export default function Ordenes() {
                         new Date(rowData.cierre),
                         "dd 'de' MMMM 'del' yyyy 'a las' hh:mm",
                         {
-                          locale: es
+                          locale: es,
                         }
                       )}
                     </>
                   ) : (
                     <></>
-                  )
+                  ),
               },
               {
                 title: "Importe",
                 field: "importe",
-                render: (rowData: any) => <>${rowData.importe}</>
+                render: (rowData: any) => <>${rowData.importe}</>,
               },
               { title: "Cliente", field: "cliente.nombre" },
               { title: "Mesa", field: "mesa.nombre" },
@@ -512,21 +522,22 @@ export default function Ordenes() {
               {
                 title: "Preparada",
                 field: "preparada",
-                render: (rowData: any) => <>{rowData.preparada ? "✓" : "✗"}</>
-              }
+                render: (rowData: any) => <>{rowData.preparada ? "✓" : "✗"}</>,
+              },
             ]}
-            data={async query => {
+            data={async (query) => {
               const response = await axiosInstance.request({
-                url: `/ordenes?page=${query.page +
-                  1}&filter={"where":{"q":"${encodeURIComponent(
+                url: `/ordenes?page=${
+                  query.page + 1
+                }&filter={"where":{"q":"${encodeURIComponent(
                   query.search ? query.search : ""
                 )}"},"include":["cliente","usuario","mesa"]}`,
-                method: "GET"
+                method: "GET",
               });
               return {
                 data: response.data.data,
                 page: response.data.meta.currentPage - 1,
-                totalCount: response.data.meta.totalItemCount
+                totalCount: response.data.meta.totalItemCount,
               };
             }}
             onEditClick={editElement}
@@ -557,7 +568,11 @@ export default function Ordenes() {
           />
         )}
         <OrdenFormDialog open={newFormOpen} onClose={handleNewFormClose} />
-        <OrdenDetalleListDialog open={ordenDetalleProps.open} ordenId={ordenDetalleProps.id} onClose={handleOrdenDetalleClose} />
+        <OrdenDetalleListDialog
+          open={ordenDetalleProps.open}
+          ordenId={ordenDetalleProps.id}
+          onClose={handleOrdenDetalleClose}
+        />
       </Grid>
     </Grid>
   );

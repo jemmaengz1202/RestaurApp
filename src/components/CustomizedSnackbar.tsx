@@ -1,21 +1,25 @@
-import React from 'react';
-import { Snackbar } from '@material-ui/core';
-import CustomizedSBContent from './CustomizedSBContent';
+import React from "react";
+import { Snackbar } from "@material-ui/core";
+import CustomizedSBContent from "./CustomizedSBContent";
 
 type CustomizedSnackbarProps = {
-  open: boolean,
-  handleClose: () => void,
-  variant?: 'success' | 'warning' | 'error' | 'info',
-  message: string,
+  open: boolean;
+  handleClose: () => void;
+  variant?: "success" | "warning" | "error" | "info";
+  message: string;
 };
 
-export default function({ open, handleClose, variant = 'success', message }: CustomizedSnackbarProps) {
-
+export default function ({
+  open,
+  handleClose,
+  variant = "success",
+  message,
+}: CustomizedSnackbarProps) {
   return (
     <Snackbar
       anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center'
+        vertical: "bottom",
+        horizontal: "center",
       }}
       open={open}
       autoHideDuration={6000}
@@ -28,4 +32,4 @@ export default function({ open, handleClose, variant = 'success', message }: Cus
       />
     </Snackbar>
   );
-};
+}

@@ -1,8 +1,8 @@
 export default interface OrdenDetalle {
-  id: number,
-  ordenId: number,
-  productoId: number,
-  anotaciones: string,
-  cantidad: number,
-  precioTotal: number,
-};
+  id: number;
+  ordenId: number;
+  productoId: number;
+  anotaciones: string;
+  cantidad: number;
+  subtotal: number;
+}

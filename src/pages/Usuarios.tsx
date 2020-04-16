@@ -7,7 +7,7 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { axiosInstance } from "../api";
 import { useConfirmation } from "../components/ConfirmationService";
@@ -22,13 +22,13 @@ const useStyles = makeStyles((theme: Theme) =>
     fab: {
       position: "fixed",
       bottom: theme.spacing(10),
-      right: theme.spacing(6)
+      right: theme.spacing(6),
     },
     table: {
       maxWidth: "100vw",
       margin: "auto",
-      overflow: "hidden"
-    }
+      overflow: "hidden",
+    },
   })
 );
 
@@ -42,7 +42,7 @@ export default function Usuarios() {
 
   const [editFormProps, setEditFormProps] = useState({
     id: 0,
-    open: false
+    open: false,
   });
 
   const [newFormOpen, setNewFormOpen] = useState(false);
@@ -66,7 +66,7 @@ export default function Usuarios() {
   const editElement = (usuario: any) => {
     setEditFormProps({
       id: usuario.id,
-      open: true
+      open: true,
     });
   };
 
@@ -74,7 +74,7 @@ export default function Usuarios() {
     updateTable();
     setEditFormProps({
       id: 0,
-      open: false
+      open: false,
     });
   };
 
@@ -88,12 +88,12 @@ export default function Usuarios() {
       variant: "danger",
       title: "Confirmar eliminación del usuario",
       description: `¿Estás seguro de eliminar el usuario "${usuario.nombre}"?`,
-      catchOnCancel: true
+      catchOnCancel: true,
     })
       .then(async () => {
         const response = await axiosInstance({
           url: `usuarios/${usuario.id}`,
-          method: "DELETE"
+          method: "DELETE",
         });
 
         if (response.status === 200) {
@@ -134,25 +134,26 @@ export default function Usuarios() {
                     />
                   )}
                 </>
-              )
+              ),
             },
             { title: "Identificador", field: "id" },
             { title: "Nombre", field: "nombre" },
             { title: "Rol", field: "roles[0].name" },
-            { title: "Usuario", field: "username" }
+            { title: "Usuario", field: "username" },
           ]}
-          data={async query => {
+          data={async (query) => {
             const response = await axiosInstance.request({
-              url: `/usuarios?page=${query.page +
-                1}&filter[include][roles]&filter[where][q]=${encodeURIComponent(
+              url: `/usuarios?page=${
+                query.page + 1
+              }&filter[include][roles]&filter[where][q]=${encodeURIComponent(
                 query.search ? query.search : ""
               )}`,
-              method: "GET"
+              method: "GET",
             });
             return {
               data: response.data.data,
               page: response.data.meta.currentPage - 1,
-              totalCount: response.data.meta.totalItemCount
+              totalCount: response.data.meta.totalItemCount,
             };
           }}
           onEditClick={editElement}
@@ -173,9 +174,9 @@ export default function Usuarios() {
             onClose={handleEditFormClose}
             id={editFormProps.id}
             setOpen={() =>
-              setEditFormProps(s => ({
+              setEditFormProps((s) => ({
                 ...s,
-                open: !s.open
+                open: !s.open,
               }))
             }
           />

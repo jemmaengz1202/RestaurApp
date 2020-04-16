@@ -6,7 +6,7 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { axiosInstance } from "../api";
 import { useConfirmation } from "../components/ConfirmationService";
@@ -15,7 +15,7 @@ import { GeneralContext } from "../contexts/GeneralContext";
 import useDebounce from "../hooks/useDebounce";
 import {
   EditMesaFormDialog,
-  MesaFormDialog
+  MesaFormDialog,
 } from "../components/MesaFormDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,13 +23,13 @@ const useStyles = makeStyles((theme: Theme) =>
     fab: {
       position: "fixed",
       bottom: theme.spacing(10),
-      right: theme.spacing(6)
+      right: theme.spacing(6),
     },
     table: {
       maxWidth: "100vw",
       margin: "auto",
-      overflow: "hidden"
-    }
+      overflow: "hidden",
+    },
   })
 );
 
@@ -43,7 +43,7 @@ export default function Mesas() {
 
   const [editFormProps, setEditFormProps] = useState({
     id: 0,
-    open: false
+    open: false,
   });
 
   const [newFormOpen, setNewFormOpen] = useState(false);
@@ -67,7 +67,7 @@ export default function Mesas() {
   const editElement = (mesa: any) => {
     setEditFormProps({
       id: mesa.id,
-      open: true
+      open: true,
     });
   };
 
@@ -75,7 +75,7 @@ export default function Mesas() {
     updateTable();
     setEditFormProps({
       id: 0,
-      open: false
+      open: false,
     });
   };
 
@@ -89,12 +89,12 @@ export default function Mesas() {
       variant: "danger",
       title: "Confirmar eliminación de la mesa",
       description: `¿Estás seguro de eliminar la mesa "${mesa.nombre}"?`,
-      catchOnCancel: true
+      catchOnCancel: true,
     })
       .then(async () => {
         const response = await axiosInstance({
           url: `mesas/${mesa.id}`,
-          method: "DELETE"
+          method: "DELETE",
         });
 
         if (response.status === 200) {
@@ -130,7 +130,7 @@ export default function Mesas() {
                       : rowData.observaciones
                     : ""}
                 </>
-              )
+              ),
             },
             {
               title: "¿Está disponible?",
@@ -141,21 +141,22 @@ export default function Mesas() {
                     ? "Sí está disponible"
                     : "No está disponible"}
                 </>
-              )
-            }
+              ),
+            },
           ]}
-          data={async query => {
+          data={async (query) => {
             const response = await axiosInstance.request({
-              url: `/mesas?page=${query.page +
-                1}&filter[where][q]=${encodeURIComponent(
+              url: `/mesas?page=${
+                query.page + 1
+              }&filter[where][q]=${encodeURIComponent(
                 query.search ? query.search : ""
               )}`,
-              method: "GET"
+              method: "GET",
             });
             return {
               data: response.data.data,
               page: response.data.meta.currentPage - 1,
-              totalCount: response.data.meta.totalItemCount
+              totalCount: response.data.meta.totalItemCount,
             };
           }}
           onEditClick={editElement}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import AppBar from "@material-ui/core/AppBar";
@@ -8,27 +8,27 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
-import useAxios from '@use-hooks/axios';
-import { axiosInstance } from '../api';
-import { Grid, Divider, Card } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import ReactImageMagnify from 'react-image-magnify';
+import useAxios from "@use-hooks/axios";
+import { axiosInstance } from "../api";
+import { Grid, Divider, Card } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import ReactImageMagnify from "react-image-magnify";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      position: "relative"
+      position: "relative",
     },
     title: {
       marginLeft: theme.spacing(2),
     },
     link: {
-      textDecoration: 'none', 
-      color: 'white',
+      textDecoration: "none",
+      color: "white",
     },
     textMargin: {
       marginTop: theme.spacing(1),
-    }
+    },
   })
 );
 
@@ -39,18 +39,22 @@ const Transition = React.forwardRef<unknown, TransitionProps>(
 );
 
 type ProductoViewDialogProps = {
-  idProducto: number,
-  open: boolean,
-  handleClose: () => void,
+  idProducto: number;
+  open: boolean;
+  handleClose: () => void;
 };
 
-export default function ProductoViewDialog({ idProducto, open, handleClose }: ProductoViewDialogProps) {
+export default function ProductoViewDialog({
+  idProducto,
+  open,
+  handleClose,
+}: ProductoViewDialogProps) {
   const classes = useStyles();
   const { response, loading } = useAxios({
     axios: axiosInstance,
     url: `/productos/${idProducto}?filter[include][categoria]`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const producto = response ? response.data : null;
@@ -108,13 +112,13 @@ export default function ProductoViewDialog({ idProducto, open, handleClose }: Pr
               smallImage={{
                 alt: "Imagen del producto",
                 isFluidWidth: true,
-                src: producto.imagenUrl
+                src: producto.imagenUrl,
               }}
               largeImage={{
                 alt: "Imagen del producto",
                 src: producto.imagenUrl,
                 width: 1000,
-                height: 800
+                height: 800,
               }}
             />
           </Grid>
@@ -133,7 +137,7 @@ export default function ProductoViewDialog({ idProducto, open, handleClose }: Pr
                           style={{
                             marginRight: 16,
                             textDecoration: "none",
-                            color: "white"
+                            color: "white",
                           }}
                           to={`/productos/categoria/${producto.categoriaId}`}
                         >

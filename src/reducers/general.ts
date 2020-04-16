@@ -1,47 +1,50 @@
-import { GeneralState, snackbarVariant } from './../contexts/GeneralContext';
-import Usuario from '../types/usuario';
+import { GeneralState, snackbarVariant } from "./../contexts/GeneralContext";
+import Usuario from "../types/usuario";
 
-export const generalReducer = (state: GeneralState, action: any): GeneralState => {
+export const generalReducer = (
+  state: GeneralState,
+  action: any
+): GeneralState => {
   switch (action.type) {
-    case 'SIGN_IN':
+    case "SIGN_IN":
       return {
         ...state,
         isSignedIn: true,
         user: action.payload.user,
       };
-    case 'SIGN_OUT':
+    case "SIGN_OUT":
       return {
         ...state,
         isSignedIn: false,
         user: undefined,
       };
-    case 'CHANGE_TITLE':
+    case "CHANGE_TITLE":
       return {
         ...state,
         title: action.payload.title,
       };
-    case 'CHANGE_THEME':
-      const theme = state.theme === 'dark' ? 'light' : 'dark';
+    case "CHANGE_THEME":
+      const theme = state.theme === "dark" ? "light" : "dark";
       return {
         ...state,
         theme,
-      }
-    case 'CHANGE_SEARCH':
+      };
+    case "CHANGE_SEARCH":
       return {
         ...state,
         search: action.payload.search,
       };
-    case 'OPEN_SNACKBAR':
+    case "OPEN_SNACKBAR":
       return {
         ...state,
         snackbarMessage: action.payload.message,
         snackbarVariant: action.payload.variant,
         snackbarOpen: true,
       };
-    case 'CLOSE_SNACKBAR':
+    case "CLOSE_SNACKBAR":
       return {
         ...state,
-        snackbarMessage: '',
+        snackbarMessage: "",
         snackbarOpen: false,
       };
   }
@@ -50,7 +53,7 @@ export const generalReducer = (state: GeneralState, action: any): GeneralState =
 
 export const signInAction = (user: Usuario) => {
   return {
-    type: 'SIGN_IN',
+    type: "SIGN_IN",
     payload: {
       user,
     },
@@ -59,13 +62,13 @@ export const signInAction = (user: Usuario) => {
 
 export const signOutAction = () => {
   return {
-    type: 'SIGN_OUT',
+    type: "SIGN_OUT",
   };
 };
 
 export const changeTitleAction = (title: string) => {
   return {
-    type: 'CHANGE_TITLE',
+    type: "CHANGE_TITLE",
     payload: {
       title,
     },
@@ -74,22 +77,25 @@ export const changeTitleAction = (title: string) => {
 
 export const changeThemeAction = () => {
   return {
-    type: 'CHANGE_THEME',
+    type: "CHANGE_THEME",
   };
 };
 
 export const changeSearchAction = (search: string) => {
   return {
-    type: 'CHANGE_SEARCH',
+    type: "CHANGE_SEARCH",
     payload: {
       search,
     },
   };
 };
 
-export const openSnackbarAction = (message: string, variant: snackbarVariant = "success") => {
+export const openSnackbarAction = (
+  message: string,
+  variant: snackbarVariant = "success"
+) => {
   return {
-    type: 'OPEN_SNACKBAR',
+    type: "OPEN_SNACKBAR",
     payload: {
       message,
       variant,
@@ -99,6 +105,6 @@ export const openSnackbarAction = (message: string, variant: snackbarVariant = "
 
 export const closeSnackbarAction = () => {
   return {
-    type: 'CLOSE_SNACKBAR',
+    type: "CLOSE_SNACKBAR",
   };
 };

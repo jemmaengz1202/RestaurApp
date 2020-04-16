@@ -1,11 +1,11 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import WithTheme from '../components/WithTheme';
-import { lightTheme } from '../themes';
-import AutofillTextField from './AutofillTextField';
+import React from "react";
+import { storiesOf } from "@storybook/react";
+import WithTheme from "../components/WithTheme";
+import { lightTheme } from "../themes";
+import AutofillTextField from "./AutofillTextField";
 
-storiesOf('AutofillTextField', module)
-  .add('Dark theme', () => (
+storiesOf("AutofillTextField", module)
+  .add("Dark theme", () => (
     <WithTheme>
       <AutofillTextField
         variant="outlined"
@@ -20,7 +20,7 @@ storiesOf('AutofillTextField', module)
       />
     </WithTheme>
   ))
-  .add('Light theme', () => (
+  .add("Light theme", () => (
     <WithTheme theme={lightTheme}>
       <AutofillTextField
         variant="outlined"

@@ -3,7 +3,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import useAxios from "@use-hooks/axios";
 import { Field, Form, Formik, FormikActions } from "formik";
@@ -13,7 +13,7 @@ import { axiosInstance } from "../api";
 import { GeneralContext } from "../contexts/GeneralContext";
 import Cliente from "../types/cliente";
 import InputMask from "react-input-mask";
-import { TextField as MTextField } from '@material-ui/core';
+import { TextField as MTextField } from "@material-ui/core";
 import { clienteSchema, editClienteSchema } from "../schemas/Cliente.schema";
 
 type ClienteFormDialogProps = {
@@ -30,7 +30,9 @@ export function ClienteFormDialog(props: ClienteFormDialogProps) {
     props.cliente ? props.cliente : {}
   );
 
-  const [telefono, setTelefono] = useState(props.cliente.telefono ? props.cliente.telefono : '');
+  const [telefono, setTelefono] = useState(
+    props.cliente.telefono ? props.cliente.telefono : ""
+  );
 
   const onSubmit = async (
     values: Partial<Cliente>,
@@ -40,7 +42,7 @@ export function ClienteFormDialog(props: ClienteFormDialogProps) {
     const res = await axiosInstance({
       url: cliente.id ? `/clientes/${cliente.id}` : "/clientes",
       method: cliente.id ? "PATCH" : "POST",
-      data: clienteBody
+      data: clienteBody,
     });
 
     setSubmitting(false);
@@ -79,7 +81,7 @@ export function ClienteFormDialog(props: ClienteFormDialogProps) {
                   fullWidth
                   inputProps={{
                     minLength: 12,
-                    maxLength: 13
+                    maxLength: 13,
                   }}
                 />
                 <br />
@@ -123,7 +125,7 @@ export function ClienteFormDialog(props: ClienteFormDialogProps) {
                   fullWidth
                   inputProps={{
                     minLength: 5,
-                    maxLength: 5
+                    maxLength: 5,
                   }}
                 />
                 <br />
@@ -150,7 +152,8 @@ export function ClienteFormDialog(props: ClienteFormDialogProps) {
                       variant="outlined"
                       margin="normal"
                       fullWidth
-                    />)}
+                    />
+                  )}
                 </InputMask>
                 <br />
                 <DialogActions>
@@ -174,7 +177,7 @@ export function ClienteFormDialog(props: ClienteFormDialogProps) {
 
 ClienteFormDialog.defaultProps = {
   cliente: {},
-  title: "Añadir cliente"
+  title: "Añadir cliente",
 } as Partial<ClienteFormDialogProps>;
 
 type EditClienteFormDialogProps = {
@@ -186,13 +189,13 @@ type EditClienteFormDialogProps = {
 export function EditClienteFormDialog({
   id,
   open,
-  onClose
+  onClose,
 }: EditClienteFormDialogProps) {
   const { response, loading } = useAxios({
     axios: axiosInstance,
     url: `/clientes/${id}`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const cliente = response ? response.data : null;

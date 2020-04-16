@@ -6,27 +6,30 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { axiosInstance } from "../api";
 import { useConfirmation } from "../components/ConfirmationService";
 import MyMaterialTable from "../components/MyMaterialTable";
 import { GeneralContext } from "../contexts/GeneralContext";
 import useDebounce from "../hooks/useDebounce";
-import { EditClienteFormDialog, ClienteFormDialog } from "../components/ClienteFormDialog";
+import {
+  EditClienteFormDialog,
+  ClienteFormDialog,
+} from "../components/ClienteFormDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       position: "fixed",
       bottom: theme.spacing(10),
-      right: theme.spacing(6)
+      right: theme.spacing(6),
     },
     table: {
       maxWidth: "100vw",
       margin: "auto",
-      overflow: "hidden"
-    }
+      overflow: "hidden",
+    },
   })
 );
 
@@ -40,7 +43,7 @@ export default function Clientes() {
 
   const [editFormProps, setEditFormProps] = useState({
     id: 0,
-    open: false
+    open: false,
   });
 
   const [newFormOpen, setNewFormOpen] = useState(false);
@@ -64,7 +67,7 @@ export default function Clientes() {
   const editElement = (cliente: any) => {
     setEditFormProps({
       id: cliente.id,
-      open: true
+      open: true,
     });
   };
 
@@ -72,7 +75,7 @@ export default function Clientes() {
     updateTable();
     setEditFormProps({
       id: 0,
-      open: false
+      open: false,
     });
   };
 
@@ -86,12 +89,12 @@ export default function Clientes() {
       variant: "danger",
       title: "Confirmar eliminación del cliente",
       description: `¿Estás seguro de eliminar el cliente "${cliente.nombre}"?`,
-      catchOnCancel: true
+      catchOnCancel: true,
     })
       .then(async () => {
         const response = await axiosInstance({
           url: `clientes/${cliente.id}`,
-          method: "DELETE"
+          method: "DELETE",
         });
 
         if (response.status === 200) {
@@ -118,20 +121,21 @@ export default function Clientes() {
             { title: "Identificador", field: "id" },
             { title: "RFC", field: "rfc" },
             { title: "Nombre", field: "nombre" },
-            { title: "Ciudad", field: "ciudad" }
+            { title: "Ciudad", field: "ciudad" },
           ]}
-          data={async query => {
+          data={async (query) => {
             const response = await axiosInstance.request({
-              url: `/clientes?page=${query.page +
-                1}&filter[where][q]=${encodeURIComponent(
+              url: `/clientes?page=${
+                query.page + 1
+              }&filter[where][q]=${encodeURIComponent(
                 query.search ? query.search : ""
               )}`,
-              method: "GET"
+              method: "GET",
             });
             return {
               data: response.data.data,
               page: response.data.meta.currentPage - 1,
-              totalCount: response.data.meta.totalItemCount
+              totalCount: response.data.meta.totalItemCount,
             };
           }}
           onEditClick={editElement}
@@ -153,10 +157,7 @@ export default function Clientes() {
             id={editFormProps.id}
           />
         )}
-        <ClienteFormDialog
-          open={newFormOpen}
-          onClose={handleNewFormClose}
-        />
+        <ClienteFormDialog open={newFormOpen} onClose={handleNewFormClose} />
       </Grid>
     </Grid>
   );

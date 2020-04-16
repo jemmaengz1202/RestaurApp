@@ -7,27 +7,29 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { axiosInstance } from "../api";
 import { useConfirmation } from "../components/ConfirmationService";
 import MyMaterialTable from "../components/MyMaterialTable";
 import { GeneralContext } from "../contexts/GeneralContext";
 import useDebounce from "../hooks/useDebounce";
-import CategoriaFormDialog, { EditCategoriaFormDialog } from "../components/CategoriaFormDialog";
+import CategoriaFormDialog, {
+  EditCategoriaFormDialog,
+} from "../components/CategoriaFormDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       position: "fixed",
       bottom: theme.spacing(10),
-      right: theme.spacing(6)
+      right: theme.spacing(6),
     },
     table: {
       maxWidth: "100vw",
       margin: "auto",
-      overflow: "hidden"
-    }
+      overflow: "hidden",
+    },
   })
 );
 
@@ -41,7 +43,7 @@ export default function Categorias() {
 
   const [editFormProps, setEditFormProps] = useState({
     id: 0,
-    open: false
+    open: false,
   });
 
   const [newFormOpen, setNewFormOpen] = useState(false);
@@ -65,7 +67,7 @@ export default function Categorias() {
   const editElement = (categoria: any) => {
     setEditFormProps({
       id: categoria.id,
-      open: true
+      open: true,
     });
   };
 
@@ -73,7 +75,7 @@ export default function Categorias() {
     updateTable();
     setEditFormProps({
       id: 0,
-      open: false
+      open: false,
     });
   };
 
@@ -87,12 +89,12 @@ export default function Categorias() {
       variant: "danger",
       title: "Confirmar eliminación de la categoría",
       description: `¿Estás seguro de eliminar la categoría "${categoria.nombre}"?`,
-      catchOnCancel: true
+      catchOnCancel: true,
     })
       .then(async () => {
         const response = await axiosInstance({
           url: `categorias/${categoria.id}`,
-          method: "DELETE"
+          method: "DELETE",
         });
 
         if (response.status === 200) {
@@ -123,7 +125,7 @@ export default function Categorias() {
                 <>
                   {rowData.imagenUrl ? (
                     <img
-                      style={{width: 170, height: 150}}
+                      style={{ width: 170, height: 150 }}
                       alt=""
                       src={rowData.imagenUrl}
                     />
@@ -133,23 +135,24 @@ export default function Categorias() {
                     />
                   )}
                 </>
-              )
+              ),
             },
             { title: "Nombre", field: "nombre" },
-            { title: "Identificador", field: "id" }
+            { title: "Identificador", field: "id" },
           ]}
-          data={async query => {
+          data={async (query) => {
             const response = await axiosInstance.request({
-              url: `/categorias?page=${query.page +
-                1}&filter[where][q]=${encodeURIComponent(
+              url: `/categorias?page=${
+                query.page + 1
+              }&filter[where][q]=${encodeURIComponent(
                 query.search ? query.search : ""
               )}`,
-              method: "GET"
+              method: "GET",
             });
             return {
               data: response.data.data,
               page: response.data.meta.currentPage - 1,
-              totalCount: response.data.meta.totalItemCount
+              totalCount: response.data.meta.totalItemCount,
             };
           }}
           onEditClick={editElement}
@@ -171,10 +174,7 @@ export default function Categorias() {
             id={editFormProps.id}
           />
         )}
-        <CategoriaFormDialog
-          open={newFormOpen}
-          onClose={handleNewFormClose}
-        />
+        <CategoriaFormDialog open={newFormOpen} onClose={handleNewFormClose} />
       </Grid>
     </Grid>
   );

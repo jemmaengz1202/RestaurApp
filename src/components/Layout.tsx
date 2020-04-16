@@ -5,7 +5,7 @@ import {
   useTheme,
   Theme,
   createStyles,
-  fade
+  fade,
 } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,71 +29,71 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex"
+      display: "flex",
     },
     appBar: {
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      })
+        duration: theme.transitions.duration.leavingScreen,
+      }),
     },
     appBarShift: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
-      })
+        duration: theme.transitions.duration.enteringScreen,
+      }),
     },
     menuButton: {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     hide: {
-      display: "none"
+      display: "none",
     },
     drawer: {
       width: drawerWidth,
-      flexShrink: 0
+      flexShrink: 0,
     },
     drawerPaper: {
-      width: drawerWidth
+      width: drawerWidth,
     },
     drawerHeader: {
       display: "flex",
       alignItems: "center",
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     content: {
       flexGrow: 1,
       padding: 0,
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      marginLeft: -drawerWidth
+      marginLeft: -drawerWidth,
     },
     contentShift: {
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
+        duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0
+      marginLeft: 0,
     },
     search: {
       position: "relative",
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25)
+        backgroundColor: fade(theme.palette.common.white, 0.25),
       },
       marginLeft: 0,
       width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
-        width: "auto"
-      }
+        width: "auto",
+      },
     },
     searchIcon: {
       width: theme.spacing(7),
@@ -102,10 +102,10 @@ const useStyles = makeStyles((theme: Theme) =>
       pointerEvents: "none",
       display: "flex",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     },
     inputRoot: {
-      color: "inherit"
+      color: "inherit",
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
@@ -114,15 +114,15 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up("sm")]: {
         width: 120,
         "&:focus": {
-          width: 200
-        }
-      }
+          width: 200,
+        },
+      },
     },
     appbarTransparent: {
       backgroundColor: "transparent",
       border: "none",
-      boxShadow: "none"
-    }
+      boxShadow: "none",
+    },
   })
 );
 
@@ -140,7 +140,7 @@ export default function Layout({ children }: LayoutProps) {
     snackbarVariant,
     snackbarMessage,
     closeSnackbar,
-    changeSearch
+    changeSearch,
   } = useContext(GeneralContext);
   const location = useLocation();
   const path = location.pathname;
@@ -171,7 +171,7 @@ export default function Layout({ children }: LayoutProps) {
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
-          [classes.appbarTransparent]: path === "/"
+          [classes.appbarTransparent]: path === "/",
         })}
       >
         <Toolbar>
@@ -212,7 +212,7 @@ export default function Layout({ children }: LayoutProps) {
                             placeholder="Buscar..."
                             classes={{
                               root: classes.inputRoot,
-                              input: classes.inputInput
+                              input: classes.inputInput,
                             }}
                             inputProps={{ "aria-label": "search" }}
                             onChange={handleSearchChange}
@@ -232,7 +232,7 @@ export default function Layout({ children }: LayoutProps) {
         anchor="left"
         open={open}
         classes={{
-          paper: classes.drawerPaper
+          paper: classes.drawerPaper,
         }}
       >
         <div className={classes.drawerHeader}>
@@ -249,7 +249,7 @@ export default function Layout({ children }: LayoutProps) {
       </Drawer>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open
+          [classes.contentShift]: open,
         })}
       >
         <div className={classes.drawerHeader} />

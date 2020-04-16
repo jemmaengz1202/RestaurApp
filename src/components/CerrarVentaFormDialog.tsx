@@ -7,7 +7,7 @@ import {
   DialogActions,
   DialogContentText,
   Button,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import useAxios from "@use-hooks/axios";
 import { axiosInstance } from "../api";
@@ -22,13 +22,13 @@ type CerrarVentaFormDialogProps = {
 export default function CerrarVentaFormDialog({
   open,
   onClose,
-  id
+  id,
 }: CerrarVentaFormDialogProps) {
   const { response, loading } = useAxios({
     axios: axiosInstance,
     url: `/ordenes/${id}`,
     method: "GET",
-    trigger: []
+    trigger: [],
   });
 
   const { openSnackbar } = useContext(GeneralContext);
@@ -57,19 +57,19 @@ export default function CerrarVentaFormDialog({
   const handleRecibidoChange = (e: ChangeEvent<HTMLInputElement>) => {
     let num = +e.currentTarget.value;
     if (!isNaN(+num)) {
-      const number = num.toFixed(2)
+      const number = num.toFixed(2);
       setRecibido(Number(number));
     }
   };
 
   const handleVentaClosed = async () => {
     const data = {
-      cierre: new Date().toJSON()
+      cierre: new Date().toJSON(),
     };
     const res = await axiosInstance({
       url: `/ordenes/${orden.id}`,
       method: "PATCH",
-      data
+      data,
     });
     if (res) {
       openSnackbar("Venta cerrada correctamente", "success");
@@ -101,7 +101,7 @@ export default function CerrarVentaFormDialog({
           label="Se recibe:"
           type="number"
           fullWidth
-          helperText={error ? "Introduce un número mayor al total": null}
+          helperText={error ? "Introduce un número mayor al total" : null}
           error={error}
           onChange={handleRecibidoChange}
         />

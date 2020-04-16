@@ -6,31 +6,34 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { axiosInstance } from "../api";
 import CategoriasList from "../components/CategoriasList";
 import { useConfirmation } from "../components/ConfirmationService";
 import MyMaterialTable from "../components/MyMaterialTable";
 import MyMaterialTabs from "../components/MyMaterialTabs";
-import { EditProductoForm, CreateProductoForm } from "../components/ProductoForm";
+import {
+  EditProductoForm,
+  CreateProductoForm,
+} from "../components/ProductoForm";
 import ProductosList from "../components/ProductosList";
 import { GeneralContext } from "../contexts/GeneralContext";
 import useDebounce from "../hooks/useDebounce";
-import ImageIcon from '@material-ui/icons/Image';
+import ImageIcon from "@material-ui/icons/Image";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       position: "fixed",
       bottom: theme.spacing(10),
-      right: theme.spacing(6)
+      right: theme.spacing(6),
     },
     table: {
       maxWidth: "100vw",
       margin: "auto",
-      overflow: "hidden"
-    }
+      overflow: "hidden",
+    },
   })
 );
 
@@ -46,7 +49,7 @@ export default function Productos() {
 
   const [editFormProps, setEditFormProps] = useState({
     id: 0,
-    open: false
+    open: false,
   });
 
   const [newFormOpen, setNewFormOpen] = useState(false);
@@ -70,7 +73,7 @@ export default function Productos() {
   const editElement = (producto: any) => {
     setEditFormProps({
       id: producto.id,
-      open: true
+      open: true,
     });
   };
 
@@ -78,7 +81,7 @@ export default function Productos() {
     updateTable();
     setEditFormProps({
       id: 0,
-      open: false
+      open: false,
     });
   };
 
@@ -92,12 +95,12 @@ export default function Productos() {
       variant: "danger",
       title: "Confirmar eliminación del producto",
       description: `¿Estás seguro de eliminar el producto "${producto.nombre}"?`,
-      catchOnCancel: true
+      catchOnCancel: true,
     })
       .then(async () => {
         const response = await axiosInstance({
           url: `productos/${producto.id}`,
-          method: "DELETE"
+          method: "DELETE",
         });
 
         if (response.status === 200) {
@@ -134,34 +137,34 @@ export default function Productos() {
                           src={rowData.imagenUrl}
                           alt=""
                         />
-                      ) : 
-                      (
-                        <ImageIcon style={{width: 120, height: 100}} />
+                      ) : (
+                        <ImageIcon style={{ width: 120, height: 100 }} />
                       )}
                     </>
-                  )
+                  ),
                 },
                 { title: "Identificador", field: "id" },
                 { title: "Nombre", field: "nombre" },
                 {
                   title: "Precio",
                   field: "precio",
-                  render: (rowData: any) => <>${rowData.precio}</>
+                  render: (rowData: any) => <>${rowData.precio}</>,
                 },
-                { title: "Categoria", field: "categoria.nombre" }
+                { title: "Categoria", field: "categoria.nombre" },
               ]}
-              data={async query => {
+              data={async (query) => {
                 const response = await axiosInstance.request({
-                  url: `/productos?page=${query.page +
-                    1}&filter[include][categoria]&filter[where][q]=${encodeURIComponent(
+                  url: `/productos?page=${
+                    query.page + 1
+                  }&filter[include][categoria]&filter[where][q]=${encodeURIComponent(
                     query.search ? query.search : ""
                   )}`,
-                  method: "GET"
+                  method: "GET",
                 });
                 return {
                   data: response.data.data,
                   page: response.data.meta.currentPage - 1,
-                  totalCount: response.data.meta.totalItemCount
+                  totalCount: response.data.meta.totalItemCount,
                 };
               }}
               onEditClick={editElement}
@@ -182,9 +185,9 @@ export default function Productos() {
                 onClose={handleEditFormClose}
                 id={editFormProps.id}
                 setOpen={() =>
-                  setEditFormProps(s => ({
+                  setEditFormProps((s) => ({
                     ...s,
-                    open: !s.open
+                    open: !s.open,
                   }))
                 }
               />
@@ -193,7 +196,7 @@ export default function Productos() {
               open={newFormOpen}
               onClose={handleNewFormClose}
               setOpen={() => {
-                setNewFormOpen(!newFormOpen)
+                setNewFormOpen(!newFormOpen);
                 // setForegroundDialogOpen(!foregroundDialogOpen);
                 console.log("Yaaaa");
               }}

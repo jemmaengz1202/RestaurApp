@@ -1,10 +1,9 @@
-import React from 'react';
-import { AppRouter } from './AppRouter';
-import WithTheme from './components/WithTheme';
-import { darkTheme } from './themes';
-import { GeneralContextContainer } from './components/GeneralContextContainer';
-import { ConfirmationServiceProvider } from './components/ConfirmationService';
-
+import React from "react";
+import { AppRouter } from "./AppRouter";
+import WithTheme from "./components/WithTheme";
+import { darkTheme } from "./themes";
+import { GeneralContextContainer } from "./components/GeneralContextContainer";
+import { ConfirmationServiceProvider } from "./components/ConfirmationService";
 
 const App = () => {
   return (

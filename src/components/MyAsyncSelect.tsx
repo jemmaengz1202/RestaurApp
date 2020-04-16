@@ -6,7 +6,7 @@ import {
   emphasize,
   makeStyles,
   useTheme,
-  Theme
+  Theme,
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import NoSsr from "@material-ui/core/NoSsr";
@@ -23,7 +23,7 @@ import { OptionProps } from "react-select/src/components/Option";
 import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
 import { ValueType, ActionMeta, OptionTypeBase } from "react-select/src/types";
-import adb from 'awesome-debounce-promise';
+import adb from "awesome-debounce-promise";
 
 export interface OptionType {
   label: string;
@@ -36,22 +36,22 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       minWidth: 170,
       marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     input: {
       display: "flex",
       padding: 10,
-      height: "auto"
+      height: "auto",
     },
     valueContainer: {
       display: "flex",
       flexWrap: "wrap",
       flex: 1,
       alignItems: "center",
-      overflow: "hidden"
+      overflow: "hidden",
     },
     chip: {
-      margin: theme.spacing(0.5, 0.25)
+      margin: theme.spacing(0.5, 0.25),
     },
     chipFocused: {
       backgroundColor: emphasize(
@@ -59,30 +59,30 @@ const useStyles = makeStyles((theme: Theme) =>
           ? theme.palette.grey[300]
           : theme.palette.grey[700],
         0.08
-      )
+      ),
     },
     noOptionsMessage: {
-      padding: theme.spacing(1, 2)
+      padding: theme.spacing(1, 2),
     },
     singleValue: {
-      fontSize: 16
+      fontSize: 16,
     },
     placeholder: {
       position: "absolute",
       left: 10,
       bottom: 10,
-      fontSize: 16
+      fontSize: 16,
     },
     paper: {
       position: "absolute",
       zIndex: 1,
       marginTop: theme.spacing(1),
       left: 0,
-      right: 0
+      right: 0,
     },
     divider: {
-      height: theme.spacing(2)
-    }
+      height: theme.spacing(2),
+    },
   })
 );
 
@@ -114,7 +114,7 @@ const Control: FunctionComponent<ControlProps<OptionTypeBase>> = (
     children,
     innerProps,
     innerRef,
-    selectProps: { classes, TextFieldProps }
+    selectProps: { classes, TextFieldProps },
   } = props;
 
   return (
@@ -127,8 +127,8 @@ const Control: FunctionComponent<ControlProps<OptionTypeBase>> = (
           className: classes.input,
           ref: innerRef,
           children,
-          ...innerProps
-        }
+          ...innerProps,
+        },
       }}
       {...TextFieldProps}
     />
@@ -144,7 +144,7 @@ const Option: FunctionComponent<OptionProps<OptionTypeBase>> = (
       selected={props.isFocused}
       component="div"
       style={{
-        fontWeight: props.isSelected ? 500 : 400
+        fontWeight: props.isSelected ? 500 : 400,
       }}
       {...props.innerProps}
     >
@@ -202,7 +202,7 @@ const MultiValue: FunctionComponent<MultiValueProps<OptionTypeBase>> = (
       tabIndex={-1}
       label={props.children}
       className={clsx(props.selectProps.classes.chip, {
-        [props.selectProps.classes.chipFocused]: props.isFocused
+        [props.selectProps.classes.chipFocused]: props.isFocused,
       })}
       onDelete={props.removeProps.onClick}
       deleteIcon={<CancelIcon {...props.removeProps} />}
@@ -232,7 +232,7 @@ const components = {
   Option,
   Placeholder,
   SingleValue,
-  ValueContainer
+  ValueContainer,
 };
 
 type MyAsyncSelectProps = {
@@ -249,7 +249,7 @@ export default function MyAsyncSelect({
   value,
   label,
   onChange,
-  loadOptions
+  loadOptions,
 }: MyAsyncSelectProps) {
   const classes = useStyles();
   const theme = useTheme();
@@ -259,9 +259,9 @@ export default function MyAsyncSelect({
       ...base,
       color: theme.palette.text.primary,
       "& input": {
-        font: "inherit"
-      }
-    })
+        font: "inherit",
+      },
+    }),
   };
 
   return (
@@ -275,10 +275,10 @@ export default function MyAsyncSelect({
             label: label,
             InputLabelProps: {
               htmlFor: "react-select-single",
-              shrink: true
-            }
+              shrink: true,
+            },
           }}
-          noOptionsMessage={_ => "No encontrado"}
+          noOptionsMessage={(_) => "No encontrado"}
           placeholder="Selecciona un elemento"
           loadOptions={adb(loadOptions, 500)}
           components={components}
