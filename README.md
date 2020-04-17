@@ -1,6 +1,9 @@
 # RestaurApp
 Proyecto para la clase de Programación Web en la carrera de Ingeniería en Sistemas Computacionales. Frontend para un Restaurant.
 
+## Despliegue
+Para el despliegue, referirse a la documentación de [create-react-app](https://github.com/facebook/create-react-app).
+
 ## Tecnologías utilizadas
 * Typescript
 * React (CRA)
